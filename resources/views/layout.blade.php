@@ -24,7 +24,7 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="#">Clients</a>
                     <a class="nav-item nav-link" href="#">Inventaire</a>
-                    <a class="nav-item nav-link" href="#">Locations</a>
+                    <a class="nav-item nav-link" href="/locations">Locations</a>
                 </div>
             </div>
         </nav>
