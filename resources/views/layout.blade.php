@@ -8,6 +8,7 @@
 
     <link href="css/app.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap/typeaheadjs.css" rel="stylesheet">
     <script src="js/jquery/jquery.js" type="text/javascript"></script>
     <script src="js/bootstrap/bootstrap.js" type="text/javascript"></script>
     <script src="js/typeahead.bundle.js" type="text/javascript"></script>
@@ -43,7 +44,7 @@
 
         // passing in `null` for the `options` arguments will result in the default
         // options being used
-        $('#test .typeahead').typeahead(null, {
+        $('#scrollable-dropdown-menu #nom').typeahead(null, {
         name: 'countries',
         source: countries
         });

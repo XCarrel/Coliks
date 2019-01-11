@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use App\Customers;
 use App\Contracts;
 use App\Cities;
@@ -24,14 +25,16 @@ class locationsController extends Controller
 
     public function autocomplete(Request $request){
 
-        $data = Customers::select("firstname")
-        ->where("firstname","LIKE","%{$request->input('query')}%")
+        //Get the firstname values
+        $data = Customers::select("lastname")
+        ->where("lastname","LIKE","%{$request->input('query')}%")
         ->get();
-        $array=[];
-        foreach($data as $item){
-            array_push($array, $item->firstname);
-        }   
-        return response()->json($array);
+        
+        //Get the values wihtout the column name
+        $data->flatten->all();
+        
+        //Return the data as JSON
+        return response()->json($data);
     }
     
 

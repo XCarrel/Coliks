@@ -54,6 +54,8 @@ html {
   width: device-width;
 }
 
+
+
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
@@ -9027,4 +9029,6 @@ a.text-dark:hover, a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
+
+@import "typeaheadjs.scss";
 /*# sourceMappingURL=bootstrap.css.map */

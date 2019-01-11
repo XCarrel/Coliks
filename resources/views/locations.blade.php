@@ -8,9 +8,9 @@
 
 <form >
   <div class="form-row">
-    <div class="form-group col-md-6" id="test">
+    <div class="form-group col-md-6" id="scrollable-dropdown-menu">
       <label for="Nom">Nom :</label>
-      <input type="text" class="typeahead form-control" id="nom" name="nom">
+      <input type="text" class="form-control" id="nom" name="nom">
     </div>
     <div class="form-group col-md-6">
       <label for="Adresse">Adresse :</label>
