@@ -10,6 +10,7 @@
     <link href="css/bootstrap/bootstrap.css" rel="stylesheet" type="text/css">
     <script src="js/jquery/jquery.js" type="text/javascript"></script>
     <script src="js/bootstrap/bootstrap.js" type="text/javascript"></script>
+    <script src="js/typeahead.bundle.js" type="text/javascript"></script>
 
     @yield('pagecss')
     @yield('pagejs')
@@ -32,5 +33,20 @@
     @yield('content')
 </div>
 <footer class="footer"><span class="version">Coliks v{{ config('app.version') }}</span></footer>
+<script type="text/javascript">
+        var countries = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        // url points to a json file that contains an array of country names, see
+        prefetch: '{{route('autocomplete') }}'
+        });
+
+        // passing in `null` for the `options` arguments will result in the default
+        // options being used
+        $('#test .typeahead').typeahead(null, {
+        name: 'countries',
+        source: countries
+        });
+</script>
 </body>
 </html>

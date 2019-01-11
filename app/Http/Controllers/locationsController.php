@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Customers;
 use App\Contracts;
+use App\Cities;
 
 class locationsController extends Controller
 {
@@ -16,10 +17,23 @@ class locationsController extends Controller
     public function index()
     {
         $customers = Customers::all();
-        $contracts = Contracts::all();
+        $cities = Cities::all();
 
-        return view('locations')->with('customers', $customers)->with('contracts', $contracts);
+        return view('locations')->with('customers', $customers)->with('cities', $cities);
     }
+
+    public function autocomplete(Request $request){
+
+        $data = Customers::select("firstname")
+        ->where("firstname","LIKE","%{$request->input('query')}%")
+        ->get();
+        $array=[];
+        foreach($data as $item){
+            array_push($array, $item->firstname);
+        }   
+        return response()->json($array);
+    }
+    
 
     /**
      * Show the form for creating a new resource.

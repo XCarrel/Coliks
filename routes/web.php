@@ -15,4 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/locations', 'locationsController@index');
+Route::get('locations', 'locationsController@index')->name('locations');;
+Route::get('autocomplete', 'locationsController@autocomplete')->name('autocomplete');

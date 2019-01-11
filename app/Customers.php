@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Cities;
 
 class Customers extends Model
 {
@@ -16,5 +17,10 @@ class Customers extends Model
     public function purchases()
     {
         return $this->hasMany('app\Purchases');
+    }
+
+    public function cities()
+    {
+        return $this->belongsTo('app\Cities');
     }
 }
