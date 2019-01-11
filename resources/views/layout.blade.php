@@ -19,11 +19,11 @@
 <div id="wrap">
     <div id="main" class="container clear-top">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#"><img class="logo" src="/assets/images/logo-sports-time.png"></a>
+            <a class="navbar-brand" href="/"><img class="logo" src="/assets/images/logo-sports-time.png"></a>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="#">Clients</a>
-                    <a class="nav-item nav-link" href="#">Inventaire</a>
+                    <a class="nav-item nav-link" href="/inventaire">Inventaire</a>
                     <a class="nav-item nav-link" href="#">Locations</a>
                 </div>
             </div>
