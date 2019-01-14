@@ -29,12 +29,17 @@ class locationsController extends Controller
         $data = Customers::select("lastname")
         ->where("lastname","LIKE","%{$request->input('query')}%")
         ->get();
+
         
         //Get the values wihtout the column name
-        $data->flatten->all();
+        $last_names=[];
+        foreach($data as $item){
+            array_push($last_names, $item->lastname);
+        }   
+        
         
         //Return the data as JSON
-        return response()->json($data);
+        return response()->json($last_names);
     }
     
 
