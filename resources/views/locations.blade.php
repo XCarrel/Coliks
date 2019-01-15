@@ -3,7 +3,11 @@
 @section('content')
 
 <h2>Contrat de location</h2>
+@foreach ($name as $names)
 
+{{$names}}
+
+@endforeach
 -------------------
 
 <form >
@@ -18,7 +22,7 @@
     </div>
   </div>
   <div class="form-row">
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-6" id="scrollable-dropdown-menu">
       <label for="Prenom">Prénom :</label>
       <input type="text" class="form-control" id="prenom" name="prenom">
     </div>

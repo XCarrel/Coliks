@@ -35,18 +35,59 @@
 </div>
 <footer class="footer"><span class="version">Coliks v{{ config('app.version') }}</span></footer>
 <script type="text/javascript">
-        var countries = new Bloodhound({
+        var lastname = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.whitespace,
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        // url points to a json file that contains an array of country names, see
-        prefetch: '{{route('autocomplete') }}'
+        // url points to a json file that contains an array of last names, see
+        prefetch: '{{route('autocomplete_lastname') }}'
         });
+
+        var firstname = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        // url points to a json file that contains an array of first names, see
+        prefetch: '{{route('autocomplete_firstname') }}'
+        });
+
 
         // passing in `null` for the `options` arguments will result in the default
         // options being used
-        $('#scrollable-dropdown-menu #nom').typeahead(null, {
-        name: 'countries',
-        source: countries
+        $('#scrollable-dropdown-menu #nom').typeahead({
+            highlight: true,
+            hint: true,
+        },
+        {
+            name: 'lastname',
+            source: lastname
+        });
+        $('#scrollable-dropdown-menu #prenom').typeahead({
+            highlight: true,
+            hint: true,
+        },
+        {
+            name: 'firstname',
+            source: firstname
+        });
+
+        //Get the value input when a value is selected on dropdown
+        $(document).ready(function(){
+            alert('tutu');
+        $('#nom').typeahead(/* pass in your datasets and initialize the typeahead */).on('typeahead:selected', function(){
+                var nom = $("#nom").val();
+                }
+            );           
+            $.ajax({
+                type: "POST",
+                url: '{{route('index')}}',
+                data: {'nom': lastname},
+                success: function(response){ // What to do if we succeed
+                    console.log(response); 
+                },
+                error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            });
         });
 </script>
 </body>

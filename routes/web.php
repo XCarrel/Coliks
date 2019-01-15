@@ -15,5 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('locations', 'locationsController@index')->name('locations');;
-Route::get('autocomplete', 'locationsController@autocomplete')->name('autocomplete');
+Route::get('locations', 'locationsController@index')->name('locations');
+Route::get('autocomplete_lastname', 'locationsController@autocomplete_lastname')->name('autocomplete_lastname');
+Route::get('autocomplete_firstname', 'locationsController@autocomplete_firstname')->name('autocomplete_firstname');
+Route::post('locations/ajaxvalue', 'locationsController@index')->name('index');
