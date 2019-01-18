@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-
-class Categories extends Model
+class Durations extends Model
 {
-    public function items()
+    public function rentprices()
     {
-        return $this->belongsTo('App\Items');
+        return $this->hasMany('App\Rentprices');
     }
+
     public function renteditems()
     {
         return $this->hasMany('App\Renteditems');
