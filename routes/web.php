@@ -15,6 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/inventaire', function () {
-    return view('inventaire');
+Route::get('/client', function () {
+    return view('client');
 });
