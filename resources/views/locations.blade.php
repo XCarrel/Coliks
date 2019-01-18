@@ -3,11 +3,7 @@
 @section('content')
 
 <h2>Contrat de location</h2>
-@foreach ($name as $names)
 
-{{$names}}
-
-@endforeach
 -------------------
 
 <form >

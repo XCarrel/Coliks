@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Customers;
-use App\Contracts;
 use App\Cities;
+use App\Contracts;
 
 class locationsController extends Controller
 {
@@ -16,15 +16,41 @@ class locationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
+    {      
+        return view('locations');
+    }
+
+    public function showForm(Request $request)
     {
-        $customers = Customers::all();
-        $cities = Cities::all();
+
+        // Get POST value from ajax
+        $nom = $request->all();
+
+        /*$users = Customers::all()
+        ->with('Cities', 'cities.name')
+        ->with('Contracts', 'contracts.ID_Contrat', 'contracts.total', 'contracts.creationdate', 'contracts.plannedreturn')
+        ->where("lastname", $nom)
+        ->get();*/
+
+        $users = Customers::select('lastname', 'firstname', 'address', 'phone', 'mobile', 'email')
+        ->where("lastname", $nom)
+        ->join('contracts', 'contracts.customer_id',   '=', 'customers.id')
+        ->join('cities', 'cities.id', '=', 'customers.city_id')       
+        ->get();
+
+        /*if ($user->count() > 1) {
+            
+        }*/
+        
+
+            // Return values as JSON
+            return response()->json(array(
+                'success' => true,
+                'value'   => $users
+            )); 
 
         
-        $name = $request->all();
-
-
-        return view('locations')->with('name', $name);
+        
     }
 
     public function autocomplete_lastname(Request $request){

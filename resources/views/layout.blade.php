@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Laravel</title>
 
     <link href="css/app.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap/typeaheadjs.css" rel="stylesheet">
-    <script src="js/jquery/jquery.js" type="text/javascript"></script>
+    <script src="js/jquery/jquery.min.js" type="text/javascript"></script>
     <script src="js/bootstrap/bootstrap.js" type="text/javascript"></script>
     <script src="js/typeahead.bundle.js" type="text/javascript"></script>
 
@@ -71,23 +71,28 @@
 
         //Get the value input when a value is selected on dropdown
         $(document).ready(function(){
-            alert('tutu');
-        $('#nom').typeahead(/* pass in your datasets and initialize the typeahead */).on('typeahead:selected', function(){
-                var nom = $("#nom").val();
-                }
-            );           
-            $.ajax({
-                type: "POST",
-                url: '{{route('index')}}',
-                data: {'nom': lastname},
-                success: function(response){ // What to do if we succeed
-                    console.log(response); 
-                },
-                error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-                    console.log(JSON.stringify(jqXHR));
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                }
-            });
+        $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initialize the typeahead */).on('typeahead:select', function(){
+                var nom = $("#nom").val();       
+                    $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "POST",
+                    url: '{{route('ajax')}}',
+                    data: {'nom': nom},
+                    datatype: "json",
+                    success: function(msg){ // What to do if we succeed
+                        $('#prenom').empty(); {
+                            $("#prenom").val(msg.value.nom);
+                            console.log(msg.value.nom);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                        console.log(JSON.stringify(jqXHR));
+                        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    }
+                });
+        }); 
         });
 </script>
 </body>

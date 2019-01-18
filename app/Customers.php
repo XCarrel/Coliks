@@ -11,16 +11,16 @@ class Customers extends Model
 
     public function contracts()
     {
-        return $this->hasMany('app\Contracts');
+        return $this->hasMany('App\Contracts');
     }
 
     public function purchases()
     {
-        return $this->hasMany('app\Purchases');
+        return $this->hasMany('App\Purchases');
     }
 
     public function cities()
     {
-        return $this->belongsTo('app\Cities');
+        return $this->belongsTo('App\Cities');
     }
 }
