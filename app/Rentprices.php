@@ -11,16 +11,16 @@ class Rentprices extends Model
 {
     public function geartypes()
     {
-        return $this->belongsTo('app\Geartypes');
+        return $this->belongsTo('App\Geartypes');
     }
 
     public function durations()
     {
-        return $this->belongsTo('app\Durations');
+        return $this->belongsTo('App\Durations');
     }
 
     public function categories()
     {
-        return $this->belongsTo('app\Categories');
+        return $this->belongsTo('App\Categories');
     }
 }

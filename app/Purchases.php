@@ -9,6 +9,6 @@ class Purchases extends Model
 {
     public function customers()
     {
-        return $this->belongsTo('app\Customers');
+        return $this->belongsTo('App\Customers');
     }
 }

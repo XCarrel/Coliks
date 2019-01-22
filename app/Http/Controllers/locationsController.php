@@ -26,28 +26,34 @@ class locationsController extends Controller
         // Get POST value from ajax
         $nom = $request->all();
 
-        /*$users = Customers::all()
-        ->with('Cities', 'cities.name')
-        ->with('Contracts', 'contracts.ID_Contrat', 'contracts.total', 'contracts.creationdate', 'contracts.plannedreturn')
-        ->where("lastname", $nom)
-        ->get();*/
+        // SQL request
+        $users = Customers::with('contracts', 'cities')->where("lastname", $nom)->get();
 
-        $users = Customers::select('lastname', 'firstname', 'address', 'phone', 'mobile', 'email')
-        ->where("lastname", $nom)
-        ->join('contracts', 'contracts.customer_id',   '=', 'customers.id')
-        ->join('cities', 'cities.id', '=', 'customers.city_id')       
-        ->get();
 
-        /*if ($user->count() > 1) {
+        // Check if multiple records
+        if ($users->count() > 1) {
+
+
+            \Session::flash('flash_message','Il y a plusieurs noms de famille, veuillez en choisir un');
             
-        }*/
+            // Return values as JSON
+            return response()->json([
+                'success' => 'firstname',
+                'value'   => $users,
+                'flash_message' => 'Il y a plusieurs noms de famille, veuillez en choisir un'
+            ]);
+
+            return View::make('flash-messages');
+
+        }
+        else{
+            // Return values as JSON
+            return response()->json(['value' => $users]); 
+
+        }
         
 
-            // Return values as JSON
-            return response()->json(array(
-                'success' => true,
-                'value'   => $users
-            )); 
+            
 
         
         
@@ -72,25 +78,6 @@ class locationsController extends Controller
         return response()->json($last_names);
     }
 
-    public function autocomplete_firstname(Request $request){
-
-
-        //Get the firstname values
-        $data = Customers::select("firstname")
-        ->where("firstname","LIKE","%{$request->input('query')}%")
-        ->get();
-
-        
-        //Get the values wihtout the column name
-        $first_names=[];
-        foreach($data as $item){
-            array_push($first_names, $item->firstname);
-        }   
-        
-        
-        //Return the data as JSON
-        return response()->json($first_names);
-    }
     
 
     /**

@@ -12,22 +12,22 @@ class Renteditems extends Model
 {
     public function durations()
     {
-        return $this->belongsTo('app\Durations');
+        return $this->belongsTo('App\Durations');
     }
 
     public function categories()
     {
-        return $this->belongsTo('app\Categories');
+        return $this->belongsTo('App\Categories');
     }
 
     public function items()
     {
-        return $this->belongsTo('app\Items');
+        return $this->belongsTo('App\Items');
     }
 
     public function contracts()
     {
-        return $this->belongsTo('app\Contracts');
+        return $this->belongsTo('App\Contracts');
     }
 
     

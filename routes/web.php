@@ -17,5 +17,5 @@ Route::get('/', function () {
 
 Route::get('locations', 'locationsController@index')->name('locations');
 Route::get('locations/autocomplete_lastname', 'locationsController@autocomplete_lastname')->name('autocomplete_lastname');
-Route::get('locations/autocomplete_firstname', 'locationsController@autocomplete_firstname')->name('autocomplete_firstname');
 Route::post('locations', 'locationsController@showForm')->name('ajax');
+

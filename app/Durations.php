@@ -8,11 +8,11 @@ class Durations extends Model
 {
     public function rentprices()
     {
-        return $this->hasMany('app\Rentprices');
+        return $this->hasMany('App\Rentprices');
     }
 
     public function renteditems()
     {
-        return $this->hasMany('app\Renteditems');
+        return $this->hasMany('App\Renteditems');
     }
 }

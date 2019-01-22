@@ -18,10 +18,18 @@
     </div>
   </div>
   <div class="form-row">
+  <div class="message form-group col-md-12">
+      <div class="alert alert-danger alert-block"></div>
+  </div>
     <div class="form-group col-md-6" id="scrollable-dropdown-menu">
-      <label for="Prenom">Prénom :</label>
-      <input type="text" class="form-control" id="prenom" name="prenom">
-    </div>
+    
+        <label for="Prenom">Prénom :</label>
+        <input type="text" class="form-control" id="prenom" name="prenom">
+ 
+    
+    <select class="custom-select" id="select">
+    </select>
+   </div>
     <div class="form-group col-md-6">
       <label for="Localite">Localité :</label>
       <input type="text" class="form-control" id="localite" name="localite">
@@ -42,7 +50,7 @@
     </div>
   </div>
   
-  <button type="submit" class="btn btn-primary" name="submit">Confirmer</button>
+  <button type="submit" class="btn btn-primary" name="submit" id="submit">Créér nouveau contrat</button>
 </form>
 
 @endsection

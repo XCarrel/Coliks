@@ -8,6 +8,6 @@ class Cities extends Model
 {
     public function customers()
     {
-        return $this->hasMany('app\Customers');
+        return $this->hasMany('App\Customers');
     }
 }

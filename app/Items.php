@@ -9,11 +9,11 @@ class Items extends Model
 {
     public function renteditems()
     {
-        return $this->hasMany('app\Renteditems');
+        return $this->hasMany('App\Renteditems');
     }
 
     public function categories()
     {
-        return $this->belongsTo('app\Categories');
+        return $this->belongsTo('App\Categories');
     }
 }

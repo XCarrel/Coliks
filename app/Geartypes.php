@@ -9,6 +9,6 @@ class Geartypes extends Model
 {
     public function rentprices()
     {
-        return $this->belongsTo('app\Rentprices');
+        return $this->belongsTo('App\Rentprices');
     }
 }

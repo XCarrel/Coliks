@@ -35,20 +35,17 @@
 </div>
 <footer class="footer"><span class="version">Coliks v{{ config('app.version') }}</span></footer>
 <script type="text/javascript">
+        $(document).ready(function() {
+            $('.message').hide();
+            $('#select').hide();
+            $('#submit').hide();
+        });
         var lastname = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.whitespace,
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         // url points to a json file that contains an array of last names, see
         prefetch: '{{route('autocomplete_lastname') }}'
         });
-
-        var firstname = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.whitespace,
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        // url points to a json file that contains an array of first names, see
-        prefetch: '{{route('autocomplete_firstname') }}'
-        });
-
 
         // passing in `null` for the `options` arguments will result in the default
         // options being used
@@ -60,14 +57,7 @@
             name: 'lastname',
             source: lastname
         });
-        $('#scrollable-dropdown-menu #prenom').typeahead({
-            highlight: true,
-            hint: true,
-        },
-        {
-            name: 'firstname',
-            source: firstname
-        });
+        
 
         //Get the value input when a value is selected on dropdown
         $(document).ready(function(){
@@ -81,11 +71,64 @@
                     url: '{{route('ajax')}}',
                     data: {'nom': nom},
                     datatype: "json",
-                    success: function(msg){ // What to do if we succeed
+                    success: function(msg){ // What to do if we succeed   
+                    if(msg.success == "firstname")  
+                    {
                         $('#prenom').empty(); {
-                            $("#prenom").val(msg.value.nom);
-                            console.log(msg.value.nom);
+                            $('#prenom').hide();
+                            $('#submit').show();
+                            $('#select').show();
+                            $(".message").show("slow", function(){
+                                $('.alert').html(msg.flash_message);
+                            }) 
+                            $('#localite').val('');
+                            $('#adresse').val('');
+                            $('#tel').val('');
+                            $('#natel').val('');
+                            $('#email').val('');
+                            $('#select').val('');
+                            $.each(msg.value, function(item) {
+                                console.log(msg.value[item].firstname);
+                                $("#nom").val(msg.value[item].lastname);
+                                $('#select').append($('<option>', { 
+                                    value: msg.value[item].firstname,
+                                    text : msg.value[item].firstname
+                                }));
+                                $('#select').on('change', function() {
+                                    
+                                    var prenom = $(this).children("option:selected").val();
+                                    console.log(prenom);
+                                    if (msg.value[item].firstname == prenom) {
+                                        $("#adresse").val(msg.value[item].address);
+                                        $("#localite").val(msg.value[item].cities);
+                                        $("#tel").val(msg.value[item].phone);
+                                        $("#natel").val(msg.value[item].mobile);
+                                        $("#email").val(msg.value[item].email);
+                                    }
+                                });
+                            });
+                            
                         }
+
+                    } else {
+                        $('#prenom').empty(); {
+                            $('#prenom').show();
+                            $('#submit').show();
+                            $('#select').hide();
+                            $(".message").hide("slow", function(){
+                                $('.alert').html(msg.flash_message);
+                            }) 
+                            $("#nom").val(msg.value[0].lastname);
+                            $("#prenom").val(msg.value[0].firstname);
+                            $("#adresse").val(msg.value[0].address);
+                            $("#localite").val(msg.value[0].cities);
+                            $("#tel").val(msg.value[0].phone);
+                            $("#natel").val(msg.value[0].mobile);
+                            $("#email").val(msg.value[0].email);
+                            console.log(msg.value[0].firstname);
+                        }
+                    }               
+                        
                     },
                     error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                         console.log(JSON.stringify(jqXHR));

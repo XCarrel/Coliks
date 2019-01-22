@@ -11,7 +11,7 @@ class Customers extends Model
 
     public function contracts()
     {
-        return $this->hasMany('App\Contracts');
+        return $this->hasMany('App\Contracts','customer_id');
     }
 
     public function purchases()
