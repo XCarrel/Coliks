@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Items extends Model
 {
+    protected $table = 'items';
+
     public function renteditems()
     {
         return $this->hasMany('App\Renteditems');
     }
-    public function categories()
+    public function category()
     {
-        return $this->belongsTo('App\Categories','category_id');
+        return $this->belongsTo('App\Categories');
     }
 
 }
