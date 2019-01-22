@@ -30,5 +30,5 @@ class Renteditems extends Model
         return $this->belongsTo('App\Contracts');
     }
 
-    
+
 }

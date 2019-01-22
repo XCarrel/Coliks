@@ -13,7 +13,6 @@ class inventoryController extends Controller
     static public function testDB()
     {
         return Items::all();
-        //return view('inventory')->with(compact('tutu'));
     }
     private function create()
     {

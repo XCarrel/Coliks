@@ -22,14 +22,14 @@ use App\Http\Controllers\inventoryController;
         </tr>
 
         @foreach($items as $item )
-            {{dd($item)}}
+
             <tr>
             <td>{{ $item->id }}</td>
             <td>{{ $item->itemnb }}</td>
             <td>{{ $item->brand }}</td>
             <td>{{ $item->model }}</td>
             <td>{{ $item->size }}</td>
-            <td>{{ $item->categories['description']}}</td>
+            <td>{{ $item->categories()->description}}</td>
             <td>{{ $item->cost }}</td>
             <td>{{ $item->return }}</td>
             <td>{{ $item->type }}</td>
