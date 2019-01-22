@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/client', function () {
+Route::get('/{any}', function () {
     return view('client');
-});
+})->where('any', '.*');
+

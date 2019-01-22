@@ -6,53 +6,27 @@
 @section('content')
 
     <h2>Liste des clients</h2>
-    @foreach ($name as $names)
 
-        {{$names}}
-
-    @endforeach
     -------------------
 <h4>Ajout de clients</h4>
 
-    <form >
-        <div class="form-row">
-            <div class="form-group col-md-6" id="scrollable-dropdown-menu">
-                <label for="Nom">Nom :</label>
-                <input type="text" class="form-control" id="nom" name="nom">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="Adresse">Adresse :</label>
-                <input type="text" class="form-control" id="adresse" name="adresse">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6" id="scrollable-dropdown-menu">
-                <label for="Prenom">Prénom :</label>
-                <input type="text" class="form-control" id="prenom" name="prenom">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="Localite">Localité :</label>
-                <input type="text" class="form-control" id="localite" name="localite">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <label for="Tel">Tél (fixe) :</label>
-                <input type="tel" class="form-control" id="tel" name="tel" pattern="[0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}">
-            </div>
-            <div class="form-group col-md-3">
-                <label for="Natel">Natel :</label>
-                <input type="tel" class="form-control" id="natel" name="natel" pattern="[0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="Email">Email :</label>
-                <input type="email" class="form-control" id="email" name="email">
-            </div>
-        </div>
+    <!doctype html>
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Laravel</title>
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+        <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" />
+        <meta name="csrf-token" value="{{ csrf_token() }}" />
+    </head>
+    <body>
+    <div id="app">
 
-        <button type="submit" class="btn btn-primary" name="submit">Confirmer</button>
-    </form>
-
+    </div>
+    <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
+    </body>
+    </html>
 @endsection
 
 @endsection
