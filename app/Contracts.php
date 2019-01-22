@@ -8,7 +8,7 @@ use Customers;
 
 class Contracts extends Model
 {
-    
+
     public function customers()
     {
         return $this->belongsTo('App\Customers');
