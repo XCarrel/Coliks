@@ -26,7 +26,7 @@ Route::get('/contract', function () {
 Route::get('/locations', function () {
 
     return view('locations');
-});
+})->name('locations');
 
 Route::get('/locations', 'locationsController@showCities');
 

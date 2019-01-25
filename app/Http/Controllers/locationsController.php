@@ -26,7 +26,7 @@ class locationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function showCities(){
-        
+
         // Get all records from table Cities
         $citiesName = Cities::all();
         
@@ -124,16 +124,17 @@ class locationsController extends Controller
                 'address'=> $request->get('adresse'),
                 'firstname'=> $request->get('prenom'),
                 'phone'=> $request->get('tel'),
-                'city_id' => $request->get('value'),
+                'city_id' => $request->get('localite_select'),
                 'mobile'=> $request->get('natel'),
                 'email'=> $request->get('email'),
             ]);
+
             
             // Create the new client
             $customer->save();
             
             // Redirige 
-            return redirect()->route('locations')->with('success', 'Vous avez ajouté un nouveau client');
+            return redirect('/locations')->with('success', 'Vous avez ajouté un nouveau client');
           
                      
           

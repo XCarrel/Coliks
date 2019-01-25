@@ -34,7 +34,7 @@
    </div>
     <div class="form-group col-md-6">
       <label for="Localite" id="localite_input">Localité :</label>
-      <select class="custom-select" id="select_localite" name="localite">
+      <select class="custom-select" id="select_localite" name="localite_select">
       <option disabled selected value> -- Séléctionner une localité -- </option>
       @foreach ($cities as $cities)
         <option value="{{$cities->id}}">{{$cities->name}}</option>
