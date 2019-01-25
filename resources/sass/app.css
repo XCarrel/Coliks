@@ -34,4 +34,7 @@ html, body {
   max-height: 150px;
   overflow-y: auto;
 }
+#button_user{
+  margin-bottom: 20px;
+}
 /*# sourceMappingURL=app.css.map */

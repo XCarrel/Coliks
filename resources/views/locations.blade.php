@@ -6,7 +6,9 @@
 
 -------------------
 
-<form >
+<form method="POST" action="{{ route('create_user') }}"">
+{{ csrf_field() }}
+  <div id="hidden_id" name="id"></div>
   <div class="form-row">
     <div class="form-group col-md-6" id="scrollable-dropdown-menu">
       <label for="Nom">Nom :</label>
@@ -19,7 +21,7 @@
   </div>
   <div class="form-row">
   <div class="message form-group col-md-12">
-      <div class="alert alert-danger alert-block"></div>
+      
   </div>
     <div class="form-group col-md-6" id="scrollable-dropdown-menu">
     
@@ -31,8 +33,16 @@
     </select>
    </div>
     <div class="form-group col-md-6">
-      <label for="Localite">Localité :</label>
+      <label for="Localite" id="localite_input">Localité :</label>
+      <select class="custom-select" id="select_localite" name="localite">
+      <option disabled selected value> -- Séléctionner une localité -- </option>
+      @foreach ($cities as $cities)
+        <option value="{{$cities->id}}">{{$cities->name}}</option>
+      @endforeach
+    </select>
+    <div id="localite_name">
       <input type="text" class="form-control" id="localite" name="localite">
+    </div>
     </div>
   </div>
   <div class="form-row">
@@ -49,8 +59,14 @@
       <input type="email" class="form-control" id="email" name="email">
     </div>
   </div>
-  
-  <button type="submit" class="btn btn-primary" name="submit" id="submit">Créér nouveau contrat</button>
-</form>
+  <div id="button_user" style="margin-bottom:10px;">
+    <button class='btn btn-primary' type='submit' id='submit_user' name='submit_user'>Créér un nouveau client</button>
+  </div>
+  <div id="button_update" style="margin-bottom:10px;">
+    <button class='btn btn-primary' type='submit' id='user_update' name='user_update'>Modifier le client</button>
+  </div>
+  </form>
+    <button class='btn btn-primary' type='submit' id='submit' name='submit'>Créér nouveau contrat</button>
+
 
 @endsection

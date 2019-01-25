@@ -15,9 +15,22 @@ class locationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {      
-        return view('locations');
+    public function index()
+    {
+        return view('contract');
+
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showCities(){
+        
+        // Get all records from table Cities
+        $citiesName = Cities::all();
+        
+        return view('locations')->with('cities', $citiesName);
     }
 
     public function showForm(Request $request)
@@ -27,13 +40,12 @@ class locationsController extends Controller
         $nom = $request->all();
 
         // SQL request
-        $users = Customers::with('contracts', 'cities')->where("lastname", $nom)->get();
-
+        $users = Customers::with('contracts', 'cities', 'purchases')->where("lastname", $nom)->get();
 
         // Check if multiple records
         if ($users->count() > 1) {
 
-
+            // Return error message
             \Session::flash('flash_message','Il y a plusieurs noms de famille, veuillez en choisir un');
             
             // Return values as JSON
@@ -52,13 +64,13 @@ class locationsController extends Controller
 
         }
         
-
-            
-
-        
         
     }
-
+    /**
+     * Performs autocomplete on column lastname.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function autocomplete_lastname(Request $request){
 
         //Get the firstname values
@@ -96,10 +108,37 @@ class locationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeClient(Request $request)
     {
-        //
+
+        /*$request->validate([
+            'lastname'=>'required',
+            'firstname'=>'required',
+            'address'=>'required',
+          ]);*/
+
+
+            // Get all the values from the form and tells which column for the value to the model Customers
+            $customer = new Customers([
+                'lastname' => $request->get('nom'),
+                'address'=> $request->get('adresse'),
+                'firstname'=> $request->get('prenom'),
+                'phone'=> $request->get('tel'),
+                'city_id' => $request->get('value'),
+                'mobile'=> $request->get('natel'),
+                'email'=> $request->get('email'),
+            ]);
+            
+            // Create the new client
+            $customer->save();
+            
+            // Redirige 
+            return redirect()->route('locations')->with('success', 'Vous avez ajouté un nouveau client');
+          
+                     
+          
     }
+
 
     /**
      * Display the specified resource.

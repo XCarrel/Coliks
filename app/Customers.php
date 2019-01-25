@@ -7,7 +7,17 @@ use Cities;
 
 class Customers extends Model
 {
+    protected $primaryKey = 'id';
     public $timestamps = false;
+    protected $fillable = [
+        'lastname',
+        'firstname',
+        'address',
+        'city_id',
+        'phone',
+        'email',
+        'mobile',
+    ];
 
     public function contracts()
     {
@@ -16,7 +26,7 @@ class Customers extends Model
 
     public function purchases()
     {
-        return $this->hasMany('App\Purchases');
+        return $this->hasMany('App\Purchases', 'customer_id');
     }
 
     public function cities()
