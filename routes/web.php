@@ -14,6 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/inventory', 'inventoryController@testDB');
+Route::get('inventory', 'inventoryController@testDB');
 
-Route::post('/additem', ['uses' => 'inventoryController@create']);
+Route::post('additem', ['uses' => 'inventoryController@create']);

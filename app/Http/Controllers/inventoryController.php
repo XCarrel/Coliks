@@ -18,27 +18,33 @@ class inventoryController extends Controller
 
         return view('inventory')->with('items',$items)->with('cats',$cats);
     }
-    public function create()
+    public function create(request $request)
     {
-        if(Request::ajax())
+        $item = new Items();
+        try
         {
-            $data = Input::all();
-            try
-            {
-                $item = new Items();
+                $item->nb = 2000;
+                $item->brand =  $request->input('brand');
+                $item->model = $request->input('model');
+                $item->size = $request->input('size');
+                $item->category_id = $request->input('category_id');
+                $item->cost = $request->input('cost');
+                $item->return = $request->input('return');
+                $item->type = $request->input('type');
+                $item->stock = $request->input('stock');
+                $item->serial = $request->input('serialnumber');
 
-                //$item->
-                //$item->
-                //$item->save();
-                return response(200);
-            }
-            catch(\Exception $er)
-            {
-                return response(" Veuillez vérifier que tous les champs aient bien étés remplis correctement" ,400);
-            }
+                $item->save();
+
+                Session::flash('status', 'l\'objet à bien été crée.');
+                Session::flash('class', 'alert-success');
         }
-        else
-            return response('error',500);
+        catch(\Exception $ex)
+        {
+            Session::flash('status', 'Une erreur est intervenue : veuillez remplir tous les champs svp');
+            Session::flash('class', 'alert-danger');
+        }
+        return redirect('inventory');
     }
     private function read()
     {
@@ -48,9 +54,22 @@ class inventoryController extends Controller
     {
 
     }
-    private function delete()
+    private function delete(request $request)
     {
-
+        $item = Items::find($request->input('item_id'));
+        try
+        {
+            $item->delete();
+            Session::flash('status', 'l\'objet à bien été supprimé.');
+            Session::flash('class', 'alert-success');
+        }
+        catch(\Exception $ex)
+        {
+            Session::flash('status', 'Une erreur est intervenue');
+            Session::flash('class', 'alert-danger');
+        }
+        return redirect('inventory');
     }
+
 
 }
