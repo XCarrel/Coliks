@@ -10,23 +10,36 @@
     -------------------
 <h4>Ajout de clients</h4>
 
-    <!doctype html>
-    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Laravel</title>
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
-        <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" />
-        <meta name="csrf-token" value="{{ csrf_token() }}" />
-    </head>
-    <body>
-    <div id="app">
+    <h3 class="page-title">Clients</h3>
 
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            View
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table table-bordered table-striped">
+                        <tr><th>First name</th>
+                            <td>{{ $client->first_name }}</td></tr><tr><th>Last name</th>
+                            <td>{{ $client->last_name }}</td></tr><tr><th>Company name</th>
+                            <td>{{ $client->company_name }}</td></tr><tr><th>Email</th>
+                            <td>{{ $client->email }}</td></tr><tr><th>Phone</th>
+                            <td>{{ $client->phone }}</td></tr><tr><th>Website</th>
+                            <td>{{ $client->website }}</td></tr><tr><th>Skype</th>
+                            <td>{{ $client->skype }}</td></tr><tr><th>Country</th>
+                            <td>{{ $client->country }}</td></tr><tr><th>Client status</th>
+                            <td>{{ $client->client_status->title or '' }}</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <p>&nbsp;</p>
+
+            <a href="{{ route('clients.index') }}" class="btn btn-default">Back to list</a>
+        </div>
     </div>
-    <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
-    </body>
-    </html>
 @endsection
 
 @endsection

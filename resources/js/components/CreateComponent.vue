@@ -5,7 +5,15 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Post Title:</label>
+                        <label>Lastname</label>
+                        <input type="text" class="form-control" v-model="post.title">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Firstname</label>
                         <input type="text" class="form-control" v-model="post.title">
                     </div>
                 </div>
@@ -34,7 +42,7 @@
         },
         methods: {
             addPost(){
-                let uri = 'http://vuelaravelcrud.test/api/post/create';
+                let uri = 'dvm2/api/post/create';
                 this.axios.post(uri, this.post).then((response) => {
                     this.$router.push({name: 'posts'});
                 });

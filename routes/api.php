@@ -20,4 +20,4 @@ Route::post('/post/create', 'ClientController@store');
 Route::get('/post/edit/{id}', 'ClientController@edit');
 Route::post('/post/update/{id}', 'ClientController@update');
 Route::delete('/post/delete/{id}', 'ClientController@delete');
-Route::get('/posts', 'PostController@index');
+Route::get('/posts', 'ClientController@index');
