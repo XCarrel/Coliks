@@ -62,10 +62,10 @@
   <div id="button_user" style="margin-bottom:10px;">
     <button class='btn btn-primary' type='submit' id='submit_user' name='submit_user'>Créér un nouveau client</button>
   </div>
+  </form>
   <div id="button_update" style="margin-bottom:10px;">
     <button class='btn btn-primary' type='submit' id='user_update' name='user_update'>Modifier le client</button>
   </div>
-  </form>
     <button class='btn btn-primary' type='submit' id='submit' name='submit'>Créér nouveau contrat</button>
 
 

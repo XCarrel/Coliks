@@ -33,4 +33,4 @@ Route::get('/locations', 'locationsController@showCities');
 Route::get('locations/autocomplete_lastname', 'locationsController@autocomplete_lastname')->name('autocomplete_lastname');
 Route::post('locations', 'locationsController@showForm')->name('ajax');
 Route::post('locations/client', 'locationsController@storeClient')->name('create_user');
-//Route::get('locations/contract?{name}', 'contractController@index')->name('new_contract');
+Route::post('locations/client/{id}', 'locationsController@update')->name('update');

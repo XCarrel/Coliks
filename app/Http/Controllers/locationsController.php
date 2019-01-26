@@ -54,7 +54,7 @@ class locationsController extends Controller
                 'value'   => $users,
                 'flash_message' => 'Il y a plusieurs noms de famille, veuillez en choisir un'
             ]);
-
+            // Return the message to view
             return View::make('flash-messages');
 
         }
@@ -172,7 +172,21 @@ class locationsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Request that update Customer table
+        $customer = Customers::findOrFail($id);
+        $customer->lastname = $request->get('nom');
+        $customer->address = $request->get('adresse');
+        $customer->firstname = $request->get('prenom');
+        $customer->phone = $request->get('tel');
+        $customer->city_id = $request->get('localite_select');
+        $customer->mobile = $request->get('natel');
+        $customer->email = $request->get('email');
+
+        // Update
+        $customer->save();
+
+        // Redirige 
+        return redirect('/locations')->with('success', 'Vous avez bien modifié le client');
     }
 
     /**

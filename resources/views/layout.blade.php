@@ -55,8 +55,11 @@
             $('.message').hide(1);
             $('#select').hide(1);
             $('#submit').hide(1);
-            $('#submit_user').hide(1);
             $('#localite_name').hide(1);
+            $('#user_update').hide(1);
+
+            
+
         });
         var lastname = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.whitespace,
@@ -78,7 +81,7 @@
         );
         
 
-        //Get the value input when a value is selected on dropdown
+        //Get the value input when a value is selected on dropdown from the autocomplete
         $(document).ready(function(){
         $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initialize the typeahead */).on('typeahead:select', function(){
                 var nom = $("#nom").val();       
@@ -91,9 +94,12 @@
                     data: {'nom': nom},
                     datatype: "json",
                     success: function(msg){ // What to do if we succeed
-                    $('#nom').keyup(function() {
+                    // Event starts everytime a key is pressed in the input
+                    $('#nom').keyup(function(event) {
                         var nom_test = $("#nom").val();
+                        console.log(event.currentTarget.autocomplete);
                         $.each(msg.value, function(index) {
+                        // Check if value input is in the database
                         if(msg.value[index].lastname != nom_test){
                             $('#localite').val('');
                             $('#prenom').val('');
@@ -104,13 +110,15 @@
                             $('#select').val('');
                             $("#submit").hide(1);
                             $('#submit_user').show();
+                            $('#user_update').hide(1);
                             $('#select_localite').show();
                             $('#localite_name').hide(1);
                         }else{
                             //$("#submit_user").hide(1);
                         }
                         });                                        
-                    });  
+                    });
+                    // Goes through scenario "lastnames with multiple firstnames"
                     if(msg.success == "firstname")  
                     {
                         $('#prenom').empty(); {
@@ -127,7 +135,9 @@
                             $('#natel').val('');
                             $('#email').val('');
                             $('#select').val('');
+                            $('#user_update').show();
                             $('#select_localite').hide(1);
+                            // Loop that gives the corect data
                             $.each(msg.value, function(item) {
                                 $("#nom").val(msg.value[item].lastname);
                                 $('#select').append($('<option>', { 
@@ -155,13 +165,20 @@
                                             url = url.replace(':id_contrat', id_contrat);
                                             window.location.href=url;
                                         });
+                                        ('#user_update').on('click', function(){
+                                            $("#nom").val(msg.value[0].lastname);
+                                            var id_user = $("#hidden_id").html();
+                                            var url = '{{route("update", ":id_user")}}';
+                                            url = url.replace(':id_contrat', id_user);
+                                            window.location.href=url;
+                                        });
                                     }
                                 });
                                 
                             
                         });
                         }
-
+                    // Normal scenario
                     } else {
                         $('#prenom').empty(); {
                             
@@ -171,6 +188,7 @@
                             $('#select_localite').hide(1);
                             $("#submit_user").hide(1);
                             $('#localite_name').show();
+                            $('#user_update').show();
                             $("#prenom").val(msg.value[0].firstname);
                             $("#adresse").val(msg.value[0].address);
                             $("#localite").val(msg.value[0].cities);
@@ -178,11 +196,20 @@
                             $("#natel").val(msg.value[0].mobile);
                             $("#email").val(msg.value[0].email);
                             $("#hidden_id").html(msg.value[0].id);
+                            // On click, redirects users to create a new contract
                             $('#submit').on('click',function(){
                                 $("#nom").val(msg.value[0].lastname);
                                 var id_contrat = $("#hidden_id").html();
                                 var url = '{{route("new_contract", ":id_contrat")}}';
                                 url = url.replace(':id_contrat', id_contrat);
+                                window.location.href=url;
+                            });
+                            // On click, send id to route
+                            ('#user_update').on('click', function(){
+                                $("#nom").val(msg.value[0].lastname);
+                                var id_user = $("#hidden_id").html();
+                                var url = '{{route("update", ":id_user")}}';
+                                url = url.replace(':id_contrat', id_user);
                                 window.location.href=url;
                             });
                         }
