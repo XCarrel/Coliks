@@ -6,7 +6,7 @@
 
 -------------------
 
-<form method="POST" action="{{ route('create_user') }}"">
+<form method="POST" action="{{ route('contract') }}"">
 {{ csrf_field() }}
   <div id="hidden_id" name="id"></div>
   <div class="form-row">
@@ -40,9 +40,6 @@
         <option value="{{$cities->id}}">{{$cities->name}}</option>
       @endforeach
     </select>
-    <div id="localite_name">
-      <input type="text" class="form-control" id="localite" name="localite">
-    </div>
     </div>
   </div>
   <div class="form-row">
@@ -59,14 +56,16 @@
       <input type="email" class="form-control" id="email" name="email">
     </div>
   </div>
-  <div id="button_user" style="margin-bottom:10px;">
-    <button class='btn btn-primary' type='submit' id='submit_user' name='submit_user'>Créér un nouveau client</button>
-  </div>
+  <button class='btn btn-primary' type='submit' id='submit' name='submit'>Créér nouveau contrat</button>
   </form>
-  <div id="button_update" style="margin-bottom:10px;">
-    <button class='btn btn-primary' type='submit' id='user_update' name='user_update'>Modifier le client</button>
+  <div id="button_user" style="margin-bottom:10px;">
+      <button class='btn btn-primary' type='submit' id='submit_user' name='submit_user'>Créér un nouveau client</button>
   </div>
-    <button class='btn btn-primary' type='submit' id='submit' name='submit'>Créér nouveau contrat</button>
+    <button class='btn btn-primary' type='submit' id='user_update' name='user_update'>Modifier le client</button>
+    
 
 
+  <table class="table" id=table" style="margin-top:150px;">
+
+  </table>
 @endsection

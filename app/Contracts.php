@@ -3,15 +3,26 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Staffs;
-use Customers;
+use App\Renteditems;
 
 class Contracts extends Model
 {
-    
+    protected $primaryKey = 'ID_Contrat';
+    protected $fillable = [
+        'creationdate',
+        'effectivereturn',
+        'plannedreturn',
+        'notes',
+        'total',
+        'takeon',
+        'paidon',
+        'insurance',
+        'goget',
+    ];
+
     public function customers()
     {
-        return $this->belongsTo('App\Customers');
+        return $this->belongsTo('App\Customers', 'customer_id');
     }
 
     public function help_staff()
@@ -26,7 +37,7 @@ class Contracts extends Model
 
     public function renteditems()
     {
-        return $this->hasMany('App\Renteditems');
+        return $this->hasMany('App\Renteditems', 'contract_id');
     }
 
 }

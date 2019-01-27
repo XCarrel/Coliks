@@ -3,6 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Redirect;
+use App\Customers;
+use App\Cities;
+use App\Contracts;
+use App\Categories;
+use App\Durations;
+use App\Geartypes;
+use App\Items;
+use App\Purchases;
+use App\Renteditems;
+use App\Rentprices;
+use App\Staffs;
+
 
 class contractController extends Controller
 {
@@ -23,7 +37,7 @@ class contractController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -32,7 +46,7 @@ class contractController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeContract(Request $request, $name)
+    public function storeContract(Request $request)
     {
     }
 
@@ -42,9 +56,17 @@ class contractController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+
+        // Get POST value from ajax
+        $client = $request->all();
+
+        //3 where clauses to be sure that's the right data returned (without id)
+        $client = Customers::where('city_id', $client['localite_select'])->Where('lastname', $client['nom'])->where('firstname', $client['prenom'])->with('cities')->get();
+
+        // Return values to view 
+        return view('contract')->with('client', $client);
     }
 
     /**

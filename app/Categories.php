@@ -8,11 +8,11 @@ class Categories extends Model
 {
     public function items()
     {
-        return $this->hasMany('App\Items');
+        return $this->hasMany('App\Items', 'category_id');
     }
 
     public function renteditems()
     {
-        return $this->hasMany('App\Renteditems');
+        return $this->hasMany('App\Renteditems', 'category_id');
     }
 }

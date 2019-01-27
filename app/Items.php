@@ -9,7 +9,7 @@ class Items extends Model
 {
     public function renteditems()
     {
-        return $this->hasMany('App\Renteditems');
+        return $this->hasMany('App\Renteditems', 'item_id');
     }
 
     public function categories()

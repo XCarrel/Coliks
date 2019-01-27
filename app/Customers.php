@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Cities;
 
 class Customers extends Model
 {
@@ -31,6 +30,6 @@ class Customers extends Model
 
     public function cities()
     {
-        return $this->belongsTo('App\Cities');
+        return $this->belongsTo('App\Cities', 'city_id');
     }
 }

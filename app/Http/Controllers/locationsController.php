@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\View;
 use App\Customers;
 use App\Cities;
 use App\Contracts;
+use App\Purchases;
 
 class locationsController extends Controller
 {
@@ -73,10 +74,9 @@ class locationsController extends Controller
      */
     public function autocomplete_lastname(Request $request){
 
+
         //Get the firstname values
-        $data = Customers::select("lastname")
-        ->where("lastname","LIKE","%{$request->input('query')}%")
-        ->get();
+        $data = Customers::with('contracts', 'cities', 'purchases')->where("lastname", "LIKE", "%{$request->input('query')}%")->get();
 
         
         //Get the values wihtout the column name
@@ -108,7 +108,7 @@ class locationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeClient(Request $request)
+    public function storeCustomer(Request $request)
     {
 
         /*$request->validate([
@@ -117,24 +117,28 @@ class locationsController extends Controller
             'address'=>'required',
           ]);*/
 
+        // Get all the values from the form and tells which column for the value to the model Customers
+        $customer->lastname = $request->lastname;
+        $customer->address= $request->address;
+        $customer->firstname= $request->firstname;
+        $customer->phone= $request->phone;
+        $customer->city_id = $request->city_id;
+        $customer->mobile= $request->mobile;
+        $customer->email= $request->email;
 
-            // Get all the values from the form and tells which column for the value to the model Customers
-            $customer = new Customers([
-                'lastname' => $request->get('nom'),
-                'address'=> $request->get('adresse'),
-                'firstname'=> $request->get('prenom'),
-                'phone'=> $request->get('tel'),
-                'city_id' => $request->get('localite_select'),
-                'mobile'=> $request->get('natel'),
-                'email'=> $request->get('email'),
-            ]);
+        // Update
+        $customer->save();
 
-            
-            // Create the new client
-            $customer->save();
-            
-            // Redirige 
-            return redirect('/locations')->with('success', 'Vous avez ajouté un nouveau client');
+        // Return error message
+        \Session::flash('success','Vous avez bien ajouté le client !');
+
+        // Return values as JSON
+        return response()->json([
+            'success' => 'Vous avez bien ajouté le client !'
+        ]);
+        
+        // Return the message to view
+        return View::make('success');
           
                      
           
@@ -170,23 +174,34 @@ class locationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         // Request that update Customer table
-        $customer = Customers::findOrFail($id);
-        $customer->lastname = $request->get('nom');
-        $customer->address = $request->get('adresse');
-        $customer->firstname = $request->get('prenom');
-        $customer->phone = $request->get('tel');
-        $customer->city_id = $request->get('localite_select');
-        $customer->mobile = $request->get('natel');
-        $customer->email = $request->get('email');
+        $customer = Customers::findOrFail($request->id);
+        
+        //Assign values from form to databases columns
+        $customer->lastname = $request->lastname;
+        $customer->address= $request->address;
+        $customer->firstname= $request->firstname;
+        $customer->phone= $request->phone;
+        $customer->city_id = $request->city_id;
+        $customer->mobile= $request->mobile;
+        $customer->email= $request->email;
 
         // Update
         $customer->save();
 
-        // Redirige 
-        return redirect('/locations')->with('success', 'Vous avez bien modifié le client');
+        // Return error message
+        \Session::flash('success','Vous avez bien modifié le client');
+
+        // Return values as JSON
+        return response()->json([
+            'success' => 'Vous avez bien modifié le client'
+        ]);
+        
+        // Return the message to view
+        return View::make('success');
+
     }
 
     /**
