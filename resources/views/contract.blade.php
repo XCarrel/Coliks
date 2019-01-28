@@ -43,7 +43,6 @@
       <input type="email" class="form-control" id="email" name="email" value="{{$client[0]['email']}}" readonly>
     </div>
   </div>
-    <button type="submit" class="btn btn-primary" id="submit" name="submit">Créér nouveau contrat</button>
   </form>
   
 

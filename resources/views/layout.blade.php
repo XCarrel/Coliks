@@ -196,13 +196,22 @@
                                     //Check if array empty
                                     if(msg.value[item].contracts == '')
                                     {
-                                        $('.table').append('<h3>Pas de contrat</h3>');
+                                        $('.table').append('<h3><p class="text-warning">Pas de contrat...</p></h3>');
                                     }else {
-                                        $('.table').append('<thead class="thead-dark"><tr><td>No contrat</td><td>Conclu le</td><td>Retour prévu</td><td>Retour effectif</td></tr></thead>');
+                                        $('.table').append('<thead class="thead-dark"><tr><th>No contrat</th><th>Conclu le</th><th>Retour prévu</th><th>Retour effectif</th><th>Retourné ?</th></tr></thead>');
                                     }
                                     $.each(msg.value[item].contracts, function(id) {
-                                        $('.table tr:first').append('<tbody');
-                                            $(".table tr:last").after("<tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+msg.value[item].contracts[id].creationdate+"</td><td>"+msg.value[item].contracts[id].plannedreturn+"</td><td>"+msg.value[item].contracts[id].effectivereturn+"</td></tr>");
+                                        //Format date with library moment.js (Day Month Year)
+                                        const creationdate = moment(msg.value[item].contracts[id].creationdate, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
+                                        const plannedreturn = moment(msg.value[item].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
+                                        const effectivereturn = moment(msg.value[item].contracts[id].effectivereturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
+                                        
+                                        //Check if returned in time 
+                                        if (moment(plannedreturn).isBefore(moment().format('DD MMMM YYYY')) && effectivereturn == '') {
+                                            $(".table thead").after("<tbody><tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td></td><td><p class='text-warning'>Non</p></td></tr></tbody>");
+                                        } else {
+                                            $(".table thead").after("<tbody><tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td>"+effectivereturn+"</td><td><p class='text-primary'>Oui</p></td></tr></tbody>");
+                                        }
                                     });
                                     $('#submit').on('click', function(){
                                         $("#nom").val(msg.value[item].lastname);
@@ -264,29 +273,23 @@
                             $("#hidden_id").html(msg.value[0].id);
                             if(msg.value[0].contracts == '')
                             {
-                                $('.table').append('<h3>Pas de contrat</h3>');
+                                $('.table').append('<h3><p class="text-warning">Pas de contrat...</p></h3>');
                             }else {
-                                $('.table').append('<thead class="thead-dark"><tr><td>No contrat</td><td>Conclu le</td><td>Retour prévu</td><td>Retour effectif</td></tr></thead>');
+                                $('.table').append('<thead class="thead-dark"><tr><th>No contrat</th><th>Conclu le</th><th>Retour prévu</th><th>Retour effectif</th><th>Retourné ?</tr></thead>');
                             }
                             $.each(msg.value[0].contracts, function(id) {
-                                moment.locale('fr');
+
+                                //Format date with library moment.js (Day Month Year)
                                 const creationdate = moment(msg.value[0].contracts[id].creationdate, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
                                 const plannedreturn = moment(msg.value[0].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
                                 const effectivereturn = moment(msg.value[0].contracts[id].effectivereturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
-                                if(effectivereturn == 'Invalid date') {
-                                    $('.table tr:first').append('<tbody');
-                                        $(".table tr:last").after("<tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td></td></tr>")
-                                        $('<p>').insertAfter($('.table').last());
 
-                                } else if(plannedreturn == 'Invalid date') {
-                                    $('.table tr:first').append('<tbody');
-                                        $(".table tr:last").after("<tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td></td><td>"+effectivereturn+"</td></tr>");
-                                } else if (creationdate == 'Invalid date') {
-                                    $('.table tr:first').append('<tbody');
-                                        $(".table tr:last").after("<tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td></td><td></td><td>"+effectivereturn+"</td></tr>");
+                                //Check if returned in time 
+                                if (moment(plannedreturn).isBefore(moment().format('DD MMMM YYYY')) && effectivereturn == '') {
+                                        $(".table thead").after("<tbody><tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td></td><td><p class='text-warning'>Non</p></td></tr></tbody>");
+
                                 } else {
-                                    $('.table tr:first').append('<tbody');
-                                        $(".table tr:last").after("<tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td>"+effectivereturn+"</td></tr>");
+                                        $(".table thead").after("<tbody><tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td>"+effectivereturn+"</td><td><p class='text-primary'>Oui</p></td></tr></tbody>");
                                 }
                             });
                             $('#submit').on('click', function(){
@@ -315,7 +318,7 @@
                                     data: formData,
                                     datatype: "json",
                                     success: function(value){
-                                        console.log(value.success)
+
                                         $('.alert alert-success li').text(value.success);
                                         location.reload(true)
                                         

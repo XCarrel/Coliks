@@ -64,8 +64,9 @@
     <button class='btn btn-primary' type='submit' id='user_update' name='user_update'>Modifier le client</button>
     
 
+    <div class="table-responsive">
+      <table class="table" id=table" style="margin-top:150px;">
 
-  <table class="table" id=table" style="margin-top:150px;">
-
-  </table>
+    </table>
+    </div>
 @endsection
