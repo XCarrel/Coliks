@@ -117,6 +117,8 @@ class locationsController extends Controller
             'address'=>'required',
           ]);*/
 
+        $customer = new Customers;
+
         // Get all the values from the form and tells which column for the value to the model Customers
         $customer->lastname = $request->lastname;
         $customer->address= $request->address;
@@ -125,6 +127,8 @@ class locationsController extends Controller
         $customer->city_id = $request->city_id;
         $customer->mobile= $request->mobile;
         $customer->email= $request->email;
+
+        dd($customer);
 
         // Update
         $customer->save();

@@ -61,6 +61,37 @@
             $('#nom').keyup(function() {
                 $('#submit_user').show();
             });
+            // On click, send data of new customer to route and then controller create the new customer
+            $('#submit_user').on('click', function(){
+                var formData = {
+                    'lastname' : $("#nom").val(),
+                    'firstname' : $("#prenom").val(),
+                    'address' : $("#adresse").val(),
+                    'city_id' : $("#select_localite").val(),
+                    'phone' : $("#tel").val(),
+                    'mobile' : $("#natel").val(),
+                    'email' : $("#email").val(),
+                };
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "POST",
+                    url: '{{route('create_user')}}',
+                    data: formData,
+                    datatype: "json",
+                    success: function(value){
+                        // What to do if we succeed
+                        $('.alert alert-success li').text(value.success);
+                        //location.reload(true)
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                        console.log(JSON.stringify(jqXHR));
+                        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    }
+                });
+
+            });
         });
         var lastname = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.whitespace,
@@ -113,8 +144,6 @@
                             $('#user_update').hide(1);
                             $('#select_localite').show();
                             $('#localite_name').hide(1);
-                        }else{
-                            //$("#submit_user").hide(1);
                         }
                         });                                        
                     });
@@ -159,47 +188,21 @@
                                         $("#hidden_id").html(msg.value[item].id);
                                         $('#submit').show();
                                         $('#user_update').show();
-                                        $('.table').append('<thead class="thead-dark"><tr><td>No contrat</td><td>Conclu le</td><td>Pos</td><td>Retour prévu</td><td>Retour effectif</td></tr></thead>');
+                                        if(msg.value[item].contracts == '')
+                                        {
+                                            $('.table').append('<h3>Pas de contrat</h3>');
+                                        }else {
+                                            $('.table').append('<thead class="thead-dark"><tr><td>No contrat</td><td>Conclu le</td><td>Retour prévu</td><td>Retour effectif</td></tr></thead>');
+                                        }
+                                        //$('.table').append('<thead class="thead-dark"><tr><td>No contrat</td><td>Conclu le</td><td>Retour prévu</td><td>Retour effectif</td></tr></thead>');
                                             $.each(msg.value[item].contracts, function(id) {
                                                 $('.table tr:first').append('<tbody');
-                                                    $(".table tr:last").after("<tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+msg.value[item].contracts[id].creationdate+"</td><td>"+msg.value[item].contracts[id]+"</td><td>"+msg.value[item].contracts[id].plannedreturn+"</td><td>"+msg.value[item].contracts[id].effectivereturn+"</td></tr>");
-
+                                                    $(".table tr:last").after("<tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+msg.value[item].contracts[id].creationdate+"</td><td>"+msg.value[item].contracts[id].plannedreturn+"</td><td>"+msg.value[item].contracts[id].effectivereturn+"</td></tr>");
                                             });
                                             $('#submit').on('click', function(){
                                                 $("#nom").val(msg.value[item].lastname);
                                             });                              
-                                        $('#submit_user').on('click', function(){
-                                          $("#nom").val(msg.value[item].lastname);
-                                          var formData = {
-                                                'id' : $("#hidden_id").html(),
-                                                'lastname' : $("#nom").val(),
-                                                'firstname' : $("#prenom").val(),
-                                                'address' : $("#adresse").val(),
-                                                'city_id' : $("#select_localite").val(),
-                                                'phone' : $("#tel").val(),
-                                                'mobile' : $("#natel").val(),
-                                                'email' : $("#email").val(),
-                                            };
-                                          $.ajax({
-                                            headers: {
-                                              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                            },
-                                            type: "POST",
-                                            url: '{{route('create_user')}}',
-                                            data: formData,
-                                            datatype: "json",
-                                            success: function(){
-                                                // What to do if we succeed
-                                                $('.alert alert-success li').text(value.success);
-                                                location.reload(true)
-                                            },
-                                            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-                                              console.log(JSON.stringify(jqXHR));
-                                              console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                                            }
-                                            });
-
-                                          });
+                                        // Ajax request with data to update in controller
                                           $('#user_update').on('click', function(){
                                             $("#nom").val(msg.value[item].lastname);
                                             var formData = {
@@ -258,48 +261,21 @@
                             $("#natel").val(msg.value[0].mobile);
                             $("#email").val(msg.value[0].email);
                             $("#hidden_id").html(msg.value[0].id);
-                            $('.table').append('<thead class="thead-dark"><tr><td>No contrat</td><td>Conclu le</td><td>Pos</td><td>Retour prévu</td><td>Retour effectif</td></tr></thead>');
+                            if(msg.value[0].contracts == '')
+                            {
+                                $('.table').append('<h3>Pas de contrat</h3>');
+                            }else {
+                                $('.table').append('<thead class="thead-dark"><tr><td>No contrat</td><td>Conclu le</td><td>Retour prévu</td><td>Retour effectif</td></tr></thead>');
+                            }
                             $.each(msg.value[0].contracts, function(id) {
                                 $('.table tr:first').append('<tbody');
-                                    $(".table tr:last").after("<tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+msg.value[0].contracts[id].creationdate+"</td><td>"+msg.value[0].contracts[id]+"</td><td>"+msg.value[0].contracts[id].plannedreturn+"</td><td>"+msg.value[0].contracts[id].effectivereturn+"</td></tr>");
+                                    $(".table tr:last").after("<tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+msg.value[0].contracts[id].creationdate+"</td><td>"+msg.value[0].contracts[id].plannedreturn+"</td><td>"+msg.value[0].contracts[id].effectivereturn+"</td></tr>");
 
                             });
                             $('#submit').on('click', function(){
                                 $("#nom").val(msg.value[0].lastname);
                             });
-                            // On click, send data of new customer to route and then controller create the new customer
-                            $('#submit_user').on('click', function(){
-                                $("#nom").val(msg.value[0].lastname);
-                                var formData = {
-                                'id' : $("#hidden_id").html(),
-                                'lastname' : $("#nom").val(),
-                                'firstname' : $("#prenom").val(),
-                                'address' : $("#adresse").val(),
-                                'city_id' : $("#select_localite").val(),
-                                'phone' : $("#tel").val(),
-                                'mobile' : $("#natel").val(),
-                                'email' : $("#email").val(),
-                                };
-                                $.ajax({
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    type: "POST",
-                                    url: '{{route('create_user')}}',
-                                    data: formData,
-                                    datatype: "json",
-                                    success: function(){
-                                        // What to do if we succeed
-                                        $('.alert alert-success li').text(value.success);
-                                        location.reload(true)
-                                    },
-                                    error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-                                        console.log(JSON.stringify(jqXHR));
-                                        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                                    }
-                                });
-
-                            });
+                            
                             // On click, send id to route and then the controller which update the customer info
                             $('#user_update').on('click', function(){
                                 $("#nom").val(msg.value[0].lastname);
