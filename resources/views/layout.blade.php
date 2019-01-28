@@ -12,6 +12,9 @@
     <script src="../js/jquery/jquery.min.js" type="text/javascript"></script>
     <script src="../js/bootstrap/bootstrap.js" type="text/javascript"></script>
     <script src="../js/typeahead.bundle.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/moment" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/locale/fr-ch.js"></script>
+
 
     @yield('pagecss')
     @yield('pagejs')
@@ -51,6 +54,7 @@
 </div>
 <footer class="footer"><span class="version">Coliks v{{ config('app.version') }}</span></footer>
 <script type="text/javascript">
+
         $(document).ready(function() {
             $('.message').hide(1);
             $('#select').hide(1);
@@ -83,7 +87,7 @@
                     success: function(value){
                         // What to do if we succeed
                         $('.alert alert-success li').text(value.success);
-                        //location.reload(true)
+                        location.reload(true)
                     },
                     error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                         console.log(JSON.stringify(jqXHR));
@@ -150,70 +154,71 @@
                     // Goes through scenario "lastnames with multiple firstnames"
                     if(msg.success == "firstname")  
                     {
-                        $('#prenom').empty(); {
-                            $('#prenom').hide(1);
-                            $('#submit_user').hide(1);
-                            $('#select').show();
-                            $('.table').empty();
-                            $(".message").show("slow", function(){
-                                $(this).addClass( "alert alert-danger alert-block" ).append("<div>"+msg.flash_message+"</div>");
-                            }) 
-                            $('#localite').val('');
-                            $('#adresse').val('');
-                            $('#tel').val('');
-                            $('#natel').val('');
-                            $('#email').val('');
-                            $('#select').val('');
-                            $('#user_update').hide(1);
-                            // Loop that gives the corect data
-                            $.each(msg.value, function(item) {
-                                $("#nom").val(msg.value[item].lastname);
-                                $('#select').append($('<option>', { 
-                                    value: msg.value[item].firstname,
-                                    text : msg.value[item].firstname
-                                }));
-                                $('#select_localite').append($('<input type="text" class="form-control" id="localite" name="localite" value='+msg.value[item].cities+'>'));
-            
-                                $('#select').on('change', function() {                                    
-                                    var prenom = $(this).children("option:selected").val();
-                                    if (msg.value[item].firstname == prenom) {
-                                        $('.table').empty();
+                        $('#prenom').empty();
+                        $('#prenom').hide(1);
+                        $('#submit_user').hide(1);
+                        $('#select').show();
+                        $('.table').empty();
+                        //Show message error for multiple firstnames
+                        $(".message").show("slow", function(){
+                            $(this).addClass( "alert alert-danger alert-block" ).append("<div>"+msg.flash_message+"</div>");
+                        }); 
+                        $('#localite').val('');
+                        $('#adresse').val('');
+                        $('#tel').val('');
+                        $('#natel').val('');
+                        $('#email').val('');
+                        $('#select').val('');
+                        $('#user_update').hide(1);
+                        // Loop that gives the corect data
+                        $.each(msg.value, function(item) {
+                            $("#nom").val(msg.value[item].lastname);
+                            $('#select').append($('<option>', { 
+                                value: msg.value[item].firstname,
+                                text : msg.value[item].firstname
+                            }));
+                            $('#select_localite').append($('<input type="text" class="form-control" id="localite" name="localite" value='+msg.value[item].cities+'>'));
+                            //Trigger event on change when firstname selected
+                            $('#select').on('change', function() {                                    
+                                var prenom = $(this).children("option:selected").val();
+                                if (msg.value[item].firstname == prenom) {
+                                    $('.table').empty();
+                                    $("#nom").val(msg.value[item].lastname);
+                                    $("#prenom").val(msg.value[item].firstname);
+                                    $("#adresse").val(msg.value[item].address);
+                                    if (msg.value[item].cities != null){ $("#select_localite").val(msg.value[item].cities.id); }
+                                    $("#tel").val(msg.value[item].phone);
+                                    $("#natel").val(msg.value[item].mobile);
+                                    $("#email").val(msg.value[item].email);
+                                    $("#hidden_id").html(msg.value[item].id);
+                                    $('#submit').show();
+                                    $('#user_update').show();
+                                    //Check if array empty
+                                    if(msg.value[item].contracts == '')
+                                    {
+                                        $('.table').append('<h3>Pas de contrat</h3>');
+                                    }else {
+                                        $('.table').append('<thead class="thead-dark"><tr><td>No contrat</td><td>Conclu le</td><td>Retour prévu</td><td>Retour effectif</td></tr></thead>');
+                                    }
+                                    $.each(msg.value[item].contracts, function(id) {
+                                        $('.table tr:first').append('<tbody');
+                                            $(".table tr:last").after("<tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+msg.value[item].contracts[id].creationdate+"</td><td>"+msg.value[item].contracts[id].plannedreturn+"</td><td>"+msg.value[item].contracts[id].effectivereturn+"</td></tr>");
+                                    });
+                                    $('#submit').on('click', function(){
                                         $("#nom").val(msg.value[item].lastname);
-                                        $("#prenom").val(msg.value[item].firstname);
-                                        $("#adresse").val(msg.value[item].address);
-                                        if (msg.value[item].cities != null){ $("#select_localite").val(msg.value[item].cities.id); }
-                                        $("#tel").val(msg.value[item].phone);
-                                        $("#natel").val(msg.value[item].mobile);
-                                        $("#email").val(msg.value[item].email);
-                                        $("#hidden_id").html(msg.value[item].id);
-                                        $('#submit').show();
-                                        $('#user_update').show();
-                                        if(msg.value[item].contracts == '')
-                                        {
-                                            $('.table').append('<h3>Pas de contrat</h3>');
-                                        }else {
-                                            $('.table').append('<thead class="thead-dark"><tr><td>No contrat</td><td>Conclu le</td><td>Retour prévu</td><td>Retour effectif</td></tr></thead>');
-                                        }
-                                        //$('.table').append('<thead class="thead-dark"><tr><td>No contrat</td><td>Conclu le</td><td>Retour prévu</td><td>Retour effectif</td></tr></thead>');
-                                            $.each(msg.value[item].contracts, function(id) {
-                                                $('.table tr:first').append('<tbody');
-                                                    $(".table tr:last").after("<tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+msg.value[item].contracts[id].creationdate+"</td><td>"+msg.value[item].contracts[id].plannedreturn+"</td><td>"+msg.value[item].contracts[id].effectivereturn+"</td></tr>");
-                                            });
-                                            $('#submit').on('click', function(){
-                                                $("#nom").val(msg.value[item].lastname);
-                                            });                              
-                                        // Ajax request with data to update in controller
-                                          $('#user_update').on('click', function(){
-                                            $("#nom").val(msg.value[item].lastname);
-                                            var formData = {
-                                                'id' : $("#hidden_id").html(),
-                                                'lastname' : $("#nom").val(),
-                                                'firstname' : $("#prenom").val(),
-                                                'address' : $("#adresse").val(),
-                                                'city_id' : $("#select_localite").val(),
-                                                'phone' : $("#tel").val(),
-                                                'mobile' : $("#natel").val(),
-                                                'email' : $("#email").val(),
+                                    });                              
+                                    // Ajax request with data to update in controller
+                                    $('#user_update').on('click', function(){
+                                        $("#nom").val(msg.value[item].lastname);
+                                        var formData = {
+                                            'id' : $("#hidden_id").html(),
+                                            'lastname' : $("#nom").val(),
+                                            'firstname' : $("#prenom").val(),
+                                            'address' : $("#adresse").val(),
+                                            'city_id' : $("#select_localite").val(),
+                                            'phone' : $("#tel").val(),
+                                            'mobile' : $("#natel").val(),
+                                            'email' : $("#email").val(),
                                             };
                                             $.ajax({
                                                 headers: {
@@ -227,21 +232,17 @@
                                                     // What to do if we succeed
                                                     $('.alert alert-success li').text(value.success);
                                                     location.reload(true)
-                                                    
+                                                        
                                                 },
                                                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                                                     console.log(JSON.stringify(jqXHR));
                                                     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                                                 }
                                             });
-
-                                        });
-                                    }
-                                });
-                                
-                            
-                        });
-                        }
+                                    });
+                                }
+                            });                                                            
+                    });
                     // Normal scenario
                     } else {
                         $('#prenom').empty();
@@ -268,9 +269,25 @@
                                 $('.table').append('<thead class="thead-dark"><tr><td>No contrat</td><td>Conclu le</td><td>Retour prévu</td><td>Retour effectif</td></tr></thead>');
                             }
                             $.each(msg.value[0].contracts, function(id) {
-                                $('.table tr:first').append('<tbody');
-                                    $(".table tr:last").after("<tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+msg.value[0].contracts[id].creationdate+"</td><td>"+msg.value[0].contracts[id].plannedreturn+"</td><td>"+msg.value[0].contracts[id].effectivereturn+"</td></tr>");
+                                moment.locale('fr');
+                                const creationdate = moment(msg.value[0].contracts[id].creationdate, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
+                                const plannedreturn = moment(msg.value[0].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
+                                const effectivereturn = moment(msg.value[0].contracts[id].effectivereturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
+                                if(effectivereturn == 'Invalid date') {
+                                    $('.table tr:first').append('<tbody');
+                                        $(".table tr:last").after("<tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td></td></tr>")
+                                        $('<p>').insertAfter($('.table').last());
 
+                                } else if(plannedreturn == 'Invalid date') {
+                                    $('.table tr:first').append('<tbody');
+                                        $(".table tr:last").after("<tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td></td><td>"+effectivereturn+"</td></tr>");
+                                } else if (creationdate == 'Invalid date') {
+                                    $('.table tr:first').append('<tbody');
+                                        $(".table tr:last").after("<tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td></td><td></td><td>"+effectivereturn+"</td></tr>");
+                                } else {
+                                    $('.table tr:first').append('<tbody');
+                                        $(".table tr:last").after("<tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td>"+effectivereturn+"</td></tr>");
+                                }
                             });
                             $('#submit').on('click', function(){
                                 $("#nom").val(msg.value[0].lastname);

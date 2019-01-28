@@ -8,6 +8,7 @@ use App\Customers;
 use App\Cities;
 use App\Contracts;
 use App\Purchases;
+use moment;
 
 class locationsController extends Controller
 {
@@ -43,6 +44,8 @@ class locationsController extends Controller
         // SQL request
         $users = Customers::with('contracts', 'cities', 'purchases')->where("lastname", $nom)->get();
 
+        //$users = moment($users->creationdate, 'DD MMMM YYYY', 'fr');
+
         // Check if multiple records
         if ($users->count() > 1) {
 
@@ -77,6 +80,7 @@ class locationsController extends Controller
 
         //Get the firstname values
         $data = Customers::with('contracts', 'cities', 'purchases')->where("lastname", "LIKE", "%{$request->input('query')}%")->get();
+
 
         
         //Get the values wihtout the column name
