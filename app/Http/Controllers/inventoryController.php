@@ -35,7 +35,7 @@ class inventoryController extends Controller
                 $item->type = $request->input('type_input');
                 $item->stock = $request->input('stock_input');
                 $item->serialnumber = $request->input('serial_input');
-                if($item->save())
+                $item->save();
 
                 Session::flash('status', 'L\'objet à bien été ajouté à l\'inventaire.');
                 Session::flash('class', 'alert-success');
@@ -52,14 +52,42 @@ class inventoryController extends Controller
     public function read($iditem)
     {
         $item = Items::find($iditem);
+        $cats = Categories::All();
         return View::make('item', [
-            'item' => $item
+            'item' => $item,
+            'cats' => $cats
 
         ]);
     }
-    private function update()
+    public function update(request $request)
     {
+        $item = Items::find($request->input('iditem'));
 
+        try
+        {
+            $item->itemnb = $request->input('nb_input');
+            $item->brand =  $request->input('brand_input');
+            $item->model = $request->input('model_input');
+            $item->size = $request->input('size_input');
+            $item->category_id = $request->input('category_input');
+            $item->cost = $request->input('cost_input');
+            $item->return = $request->input('return_input');
+            $item->type = $request->input('type_input');
+            $item->stock = $request->input('stock_input');
+            $item->serialnumber = $request->input('serial_input');
+            $item->save();
+
+            Session::flash('status', 'L\'objet à bien été modifié.');
+            Session::flash('class', 'alert-success');
+
+
+        }
+        catch(\Exception $ex)
+        {
+            Session::flash('status','Une erreur est intervenue : '.$ex->getMessage() );
+            Session::flash('class', 'alert-danger');
+        }
+        return redirect()->back();
     }
     public function delete($iditem)
     {

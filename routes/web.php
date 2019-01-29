@@ -18,6 +18,8 @@ Route::get('inventory', 'inventoryController@testDB');
 
 Route::post('additem', 'inventoryController@create');
 
+Route::post('updateitem', 'inventoryController@update');
+
 Route::get('deleteitem/{iditem?}', 'inventoryController@delete');
 
 Route::get('item/{idtem?}', 'inventoryController@read');

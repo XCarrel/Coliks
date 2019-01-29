@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Items extends Model
 {
     protected $table = 'items';
+    //protected $fillable = ['brand','model','size','cost','return','type','stock','serialnumber'];
     public $timestamps = false;
 
     public function renteditems()
