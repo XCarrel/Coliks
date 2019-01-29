@@ -16,4 +16,8 @@ Route::get('/', function () {
 });
 Route::get('inventory', 'inventoryController@testDB');
 
-Route::post('additem', ['uses' => 'inventoryController@create']);
+Route::post('additem', 'inventoryController@create');
+
+Route::get('deleteitem/{iditem?}', 'inventoryController@delete');
+
+Route::get('item/{idtem?}', 'inventoryController@read');

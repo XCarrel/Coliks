@@ -5,11 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Laravel</title>
+    <script type="text/javascript" src="{{ asset('js/jquery/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap.js') }}"></script>
 
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ asset('css/bootstrap/bootstrap.css') }}" rel="stylesheet" type="text/css" >
+
+   <!-- <script src="js/jquery/jquery.js" type="text/javascript"></script>
+    <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
     <link href="css/app.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap/bootstrap.css" rel="stylesheet" type="text/css">
-    <script src="js/jquery/jquery.js" type="text/javascript"></script>
-    <script src="js/bootstrap/bootstrap.js" type="text/javascript"></script>
+    <script src="js/bootstrap/bootstrap.js" type="text/javascript"></script>-->
 
     @yield('pagecss')
     @yield('pagejs')

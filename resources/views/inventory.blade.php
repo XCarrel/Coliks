@@ -2,10 +2,16 @@
 @extends('layout')
 
 @section('content')
-
-<div>
-
-
+    <?php
+    //bar to show information if needed
+    if (Session::get('status'))
+    {
+        echo '<div class="alert '.Session::get('class').'">';
+        echo Session::get('status');
+        echo '</div>';
+    }
+    ?>
+    <div>
     <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -17,25 +23,26 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                {{ Form::open(array('action' => 'inventoryController@create')) }}
+                {{ Form::open(array('url' => 'additem','method'=>'POST')) }}
                 <div class="modal-body mx-3">
 
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="brand_input">Code</label>
+                        {{ Form::Text('nb_input','',['class' => 'form-control validate']) }}
+                    </div>
 
                     <div class="md-form mb-5">
                         <label data-error="wrong" data-success="right" for="brand_input">Marque</label>
                         {{ Form::Text('brand_input','',['class' => 'form-control validate']) }}
-                        <input type="text" id="brand_input" class="form-control validate">
                     </div>
 
                     <div class="md-form mb-5">
                         <label data-error="wrong" data-success="right" for="model_input">Modèle</label>
-                        <input type="text" id="model_input" class="form-control validate">
                         {{ Form::Text('model_input','',['class' => 'form-control validate']) }}
                     </div>
 
                     <div class="md-form mb-5">
                         <label data-error="wrong" data-success="right" for="size_input">Taille</label>
-                        <input type="text" id="size_input" class="form-control validate">
                         {{ Form::Text('size_input','',['class' => 'form-control validate']) }}
                     </div>
                     <div class="md-form mb-5">
@@ -51,28 +58,23 @@
                     </div>
                     <div class="md-form mb-5">
                         <label data-error="wrong" data-success="right" for="cost_input">Prix</label>
-                        <input type="text" id="cost_input" class="form-control validate">
                         {{ Form::Text('price_input','',['class' => 'form-control validate']) }}
                     </div>
 
                     <div class="md-form">
                         <label data-error="wrong" data-success="right" for="return_input">Retour</label>
-                        <input type="text" id="return_input" class="form-control validate">
                         {{ Form::Text('return_input','',['class' => 'form-control validate']) }}
                     </div>
                     <div class="md-form">
                         <label data-error="wrong" data-success="right" for="type_input">Type</label>
-                        <input type="text" id="type_input" class="form-control validate">
                         {{ Form::Text('type_input','',['class' => 'form-control validate']) }}
                     </div>
                     <div class="md-form">
                         <label data-error="wrong" data-success="right" for="stock_input">Stock</label>
-                        <input type="text" id="stock_input" class="form-control validate">
                         {{ Form::Text('stock_input','',['class' => 'form-control validate']) }}
                     </div>
                     <div class="md-form">
                         <label data-error="wrong" data-success="right" for="serial_input">N° de série</label>
-                        <input type="text" id="serial_input" class="form-control validate">
                         {{ Form::Text('serial_input','',['class' => 'form-control validate']) }}
                     </div>
 
@@ -91,7 +93,7 @@
    </div>
 
 
-   <table style="width:100%" class="table">
+   <table style="width:100%" class="table" id="inventoryTable">
        <thead class="thead-dark">
            <tr>
                <th>id</th>
@@ -105,6 +107,8 @@
                <th>type</th>
                <th>stock</th>
                <th>serial</th>
+               <th>see</th>
+               <th>delete</th>
            </tr>
        </thead>
        @foreach($items as $item )
@@ -120,10 +124,44 @@
                 <td>{{ $item->return }}</td>
                 <td>{{ $item->type }}</td>
                 <td>{{ $item->stock }}</td>
-                <td>{{ $item->serialnumber }}</td>
+               <td>{{ $item->serialnumber }}</td>
+               <td><a href="item/{{ $item->id }}"><img src="assets/images/preview_icon.png" class="icon"></a></td>
+               <td><a href="deleteitem/{{ $item->id }}" onclick="return confirm('zetes sur ?')"><img src="assets/images/delete_icon.png" class="icon"></a></td>
             </tr>
         @endforeach
     </table>
 </div>
+<script>
+    $(document).ready( function () {
+        $('#inventoryTable').DataTable({
+            "sProcessing":     "Traitement en cours...",
+            "sSearch":         "Rechercher&nbsp;:",
+            "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+            "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+            "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+            "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+            "sInfoPostFix":    "",
+            "sLoadingRecords": "Chargement en cours...",
+            "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+            "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+            "oPaginate": {
+                "sFirst":      "Premier",
+                "sPrevious":   "Pr&eacute;c&eacute;dent",
+                "sNext":       "Suivant",
+                "sLast":       "Dernier"
+            },
+            "oAria": {
+                "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+                "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+            },
+            "select": {
+                "rows": {
+                    _: "%d lignes séléctionnées",
+                    0: "Aucune ligne séléctionnée",
+                    1: "1 ligne séléctionnée"
+                }
 
+            }
+        });
+    } );</script>
 @endsection
