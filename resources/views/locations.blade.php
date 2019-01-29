@@ -59,9 +59,9 @@
   <button class='btn btn-primary' type='submit' id='submit' name='submit'>Créér nouveau contrat</button>
   </form>
   <div id="button_user" style="margin-bottom:10px;">
-      <button class='btn btn-primary' type='submit' id='submit_user' name='submit_user'>Créér un nouveau client</button>
+    <button style="display:none" class='btn btn-primary' type='submit' id='submit_user' name='submit_user'>Créér un nouveau client</button>
   </div>
-    <button class='btn btn-primary' type='submit' id='user_update' name='user_update'>Modifier le client</button>
+    <button style="display:none" class='btn btn-primary' type='submit' id='user_update' name='user_update'>Modifier le client</button>
     
 
     <div class="table-responsive">
