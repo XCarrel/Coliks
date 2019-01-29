@@ -18,7 +18,8 @@
         </div>
     @endif
     <div class="text-center">
-        <a href="#" class="btn btn-default btn-rounded mb-4" onclick="revealform();">Modifier</a>
+        <a href="#" class="btn btn-default btn-rounded mb-4 data" onclick="revealform();">Modifier</a>
+        <a href="#" class="btn btn-default btn-rounded mb-4 input" onclick="revealform();">Annuler</a>
     </div>
     <table style="width:100%" class="table" id="inventoryTable">
         <thead class="thead-dark">
@@ -90,7 +91,7 @@
 
         </tbody>
     </table>
-    <button type="submit" class="input">Confirmer</button>
+    <button type="submit" class="input btn btn-primary">Confirmer</button>
 
     {{ Form::close()  }}
 <script>

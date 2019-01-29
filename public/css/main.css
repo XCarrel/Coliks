@@ -1,4 +1,8 @@
 .icon
 {
     width: 25px;
+    margin: 0 auto;
+    display:flex;
+    text-align: center;
+
 }

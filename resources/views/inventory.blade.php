@@ -95,19 +95,19 @@
    <table style="width:100%" class="table" id="inventoryTable">
        <thead class="thead-dark">
            <tr>
-               <th>id</th>
-               <th>nb</th>
-               <th>brand</th>
-               <th>model</th>
-               <th>size</th>
-               <th>category</th>
-               <th>cost</th>
-               <th>return</th>
-               <th>type</th>
-               <th>stock</th>
-               <th>serial</th>
-               <th>see</th>
-               <th>delete</th>
+               <th>ID</th>
+               <th>Code</th>
+               <th>Marque</th>
+               <th>Modèle</th>
+               <th>Taille</th>
+               <th>Categorie</th>
+               <th>Couts</th>
+               <th>Retour</th>
+               <th>Type</th>
+               <th>Stock</th>
+               <th>N°série</th>
+               <th>Voir</th>
+               <th>Supprimer</th>
            </tr>
        </thead>
        @foreach($items as $item )
@@ -124,8 +124,8 @@
                 <td>{{ $item->type }}</td>
                 <td>{{ $item->stock }}</td>
                <td>{{ $item->serialnumber }}</td>
-               <td><a href="item/{{ $item->id }}"><img src="assets/images/preview_icon.png" class="icon"></a></td>
-               <td><a href="deleteitem/{{ $item->id }}" onclick="return confirm('zetes sur ?')"><img src="assets/images/delete_icon.png" class="icon"></a></td>
+               <td align="center"><a href="item/{{ $item->id }}"><img src="assets/images/preview_icon.png" class="icon"></a></td>
+               <td align="center"><a href="deleteitem/{{ $item->id }}" onclick="return confirm('Etes-vous sûr ?')"><img src="assets/images/delete_icon.png" class="icon"></a></td>
             </tr>
         @endforeach
     </table>
