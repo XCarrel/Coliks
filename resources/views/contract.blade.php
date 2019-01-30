@@ -3,9 +3,8 @@
 @section('content')
 
 
-<h2>Nouveau contrat de location</h2>
+<h2 class="title">Nouveau contrat de location</h2>
 
--------------------
 
 <form method="POST">
 {{ csrf_field() }}
