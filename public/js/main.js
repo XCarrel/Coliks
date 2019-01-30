@@ -29,7 +29,7 @@ $(document).ready(function() {
             success: function(value){
                 // What to do if we succeed
                 $('.alert alert-success li').text(value.success);
-                location.reload(true)
+                //location.reload(true)
             },
             error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                 console.log(JSON.stringify(jqXHR));

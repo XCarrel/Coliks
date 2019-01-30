@@ -121,7 +121,7 @@ class customerController extends Controller
           ]);*/
 
         
-          $customer = new Customers;
+          /*$customer = new Customers;
 
         // Get all the values from the form and tells which column for the value to the model Customers
         $customer->lastname = $request->lastname;
@@ -130,13 +130,21 @@ class customerController extends Controller
         $customer->city_id = $request->city_id;
         $customer->phone= $request->phone;
         $customer->mobile= $request->mobile;
-        $customer->email= $request->email;
+        $customer->email= $request->email;*/
         
+        // Get all the values from the form and tells which column for the value to the model Customers and create a record in database
+        $customer = Customers::create([
+            'lastname' => $request->lastname,
+            'firstname' => $request->firstname,
+            'address'=> $request->address,
+            'city_id' => $request->city_id,
+            'phone'=> $request->phone,
+            'mobile'=> $request->mobile,
+            'email'=> $request->email,
+        ]);
 
-        // Create
-        $customer->save();
 
-        
+        dd($customer);
 
         // Return error message
         \Session::flash('success','Vous avez bien ajouté le client !');
