@@ -202,12 +202,12 @@
                                     }
                                     $.each(msg.value[item].contracts, function(id) {
                                         //Format date with library moment.js (Day Month Year)
-                                        const creationdate = moment(msg.value[item].contracts[id].creationdate, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
-                                        const plannedreturn = moment(msg.value[item].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
-                                        const effectivereturn = moment(msg.value[item].contracts[id].effectivereturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
+                                        const creationdate = moment(msg.value[item].contracts[id].creationdate, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY');
+                                        const plannedreturn = moment(msg.value[item].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY');
+                                        const effectivereturn = moment(msg.value[item].contracts[id].effectivereturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY');
                                         
                                         //Check if returned in time 
-                                        if (moment(plannedreturn).isBefore(moment().format('DD MMMM YYYY')) && effectivereturn == '') {
+                                        if (moment(plannedreturn).isBefore(moment().format('DD MMM YYYY')) && effectivereturn == '') {
                                             $(".table thead").after("<tbody><tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td></td><td><p class='text-warning'>Non</p></td></tr></tbody>");
                                         } else {
                                             $(".table thead").after("<tbody><tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td>"+effectivereturn+"</td><td><p class='text-primary'>Oui</p></td></tr></tbody>");
@@ -280,12 +280,12 @@
                             $.each(msg.value[0].contracts, function(id) {
 
                                 //Format date with library moment.js (Day Month Year)
-                                const creationdate = moment(msg.value[0].contracts[id].creationdate, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
-                                const plannedreturn = moment(msg.value[0].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
-                                const effectivereturn = moment(msg.value[0].contracts[id].effectivereturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMMM YYYY');
+                                const creationdate = moment(msg.value[0].contracts[id].creationdate, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY');
+                                const plannedreturn = moment(msg.value[0].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY');
+                                const effectivereturn = moment(msg.value[0].contracts[id].effectivereturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY');
 
                                 //Check if returned in time 
-                                if (moment(plannedreturn).isBefore(moment().format('DD MMMM YYYY')) && effectivereturn == '') {
+                                if (moment(plannedreturn).isBefore(moment().format('DD MMM YYYY')) && effectivereturn == '') {
                                         $(".table thead").after("<tbody><tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td></td><td><p class='text-warning'>Non</p></td></tr></tbody>");
 
                                 } else {
