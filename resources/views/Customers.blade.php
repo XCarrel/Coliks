@@ -20,17 +20,17 @@
                         <div class="md-form mb-5">
                             <label data-error="wrong" data-success="right" for="lastname_input">lastname</label>
                             {{ Form::Text('lastname_input','',['class' => 'form-control validate']) }}
-                            <input type="text" id="lastname_input" class="form-control validate">
+
                         </div>
 
                         <div class="md-form mb-5">
                             <label data-error="wrong" data-success="right" for="firstname_input">firstname</label>
-                            <input type="text" id="firstname_input" class="form-control validate">
+
                             {{ Form::Text('firstname_input','',['class' => 'form-control validate']) }}
                         </div>
                         <div class="md-form mb-5">
                             <label data-error="wrong" data-success="right" for="address_input">address</label>
-                            <input type="text" id="address_input" class="form-control validate">
+
                             {{ Form::Text('address_input','',['class' => 'form-control validate']) }}
                         </div>
 
@@ -46,24 +46,24 @@
 
                         <div class="md-form">
                             <label data-error="wrong" data-success="right" for="return_input">phone</label>
-                            <input type="text" id="return_input" class="form-control validate">
+
                             {{ Form::Text('phone_input','',['class' => 'form-control validate']) }}
                         </div>
                         <div class="md-form">
                             <label data-error="wrong" data-success="right" for="type_input">email</label>
-                            <input type="text" id="type_input" class="form-control validate">
+
                             {{ Form::Text('email_input','',['class' => 'form-control validate']) }}
                         </div>
                         <div class="md-form">
                             <label data-error="wrong" data-success="right" for="stock_input">mobile</label>
-                            <input type="text" id="stock_input" class="form-control validate">
+
                             {{ Form::Text('mobile_input','',['class' => 'form-control validate']) }}
                         </div>
 
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
                         {{Form::submit('Confirmer')}}
-                        <button class="btn btn-unique" id="confirmButton">Confirmer</button>
+
                     </div>
                     {{ Form::close() }}
                 </div>
