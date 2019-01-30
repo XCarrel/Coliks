@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Laravel</title>
+    <title>Laravel</title>
+    <script type="text/javascript" src="{{ asset('js/jquery/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap.js') }}"></script>
 
-    <link href="css/app.css" rel="stylesheet" type="text/css">
-    <link href="css/bootstrap/bootstrap.css" rel="stylesheet" type="text/css">
-    <script src="js/jquery/jquery.js" type="text/javascript"></script>
-    <script src="js/bootstrap/bootstrap.js" type="text/javascript"></script>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ asset('css/bootstrap/bootstrap.css') }}" rel="stylesheet" type="text/css" >
 
     @yield('pagecss')
     @yield('pagejs')
@@ -22,8 +26,8 @@
             <a class="navbar-brand" href="/"><img class="logo" src="/assets/images/logo-sports-time.png"></a>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="/client">Clients</a>
-                    <a class="nav-item nav-link" href="/inventaire">Inventaire</a>
+                    <a class="nav-item nav-link" href="/Customers">Clients</a>
+                    <a class="nav-item nav-link" href="/inventory">Inventaire</a>
                     <a class="nav-item nav-link" href="#">Locations</a>
                 </div>
             </div>
@@ -34,9 +38,6 @@
 <footer class="footer"><span class="version">Coliks v{{ config('app.version') }}</span></footer>
 
 <script type="text/javascript">
-
-
-
 </script>
 </body>
 </html>

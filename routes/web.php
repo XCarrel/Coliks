@@ -10,14 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('Customers', 'CustomersController@testDB');
 
+Route::post('additem', ['uses' => 'CustomersController@create']);
 
+Route::get('deletecust/{idcust?}', 'CustomersController@delete');
 
-Route::get('/{any}', function () {
-    return view('client');
-})->where('any', '.*');
-
+Route::get('Show/{idcust?}', 'CustomersController@read');

@@ -1,15 +1,15 @@
 <?php
 namespace App;
 use Illuminate\Database\Eloquent\Model;
-use Categories;
 class Items extends Model
 {
+    protected $table = 'items';
     public function renteditems()
     {
-        return $this->hasMany('app\Renteditems');
+        return $this->hasMany('App\Renteditems');
     }
-    public function categories()
+    public function category()
     {
-        return $this->belongsTo('app\Categories');
+        return $this->belongsTo('App\Categories');
     }
 }
