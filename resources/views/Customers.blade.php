@@ -1,7 +1,15 @@
 @extends('layout')
 
 @section('content')
-
+    <?php
+    //bar to show information if needed
+    if (Session::get('status'))
+    {
+        echo '<div class="alert '.Session::get('class').'">';
+        echo Session::get('status');
+        echo '</div>';
+    }
+    ?>
     <div>
 
         <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -9,14 +17,13 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header text-center">
-                        <h4 class="modal-title w-100 font-weight-bold">Ajouter</h4>
+                        <h4 class="modal-title w-100 font-weight-bold">Nouveau client</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                   {{ Form::open(array('action' => 'CustomersController@create')) }}
+                   {{ Form::open(array('url' => 'addcust','method'=>'POST')) }}
                     <div class="modal-body mx-3">
-
                         <div class="md-form mb-5">
                             <label data-error="wrong" data-success="right" for="lastname_input">lastname</label>
                             {{ Form::Text('lastname_input','',['class' => 'form-control validate']) }}
@@ -35,8 +42,8 @@
                         </div>
 
                         <div class="md-form mb-5">
-                            <label data-error="wrong" data-success="right" for="category_input">city</label>
-                            <select name="city_input">
+                            <label data-error="wrong" data-success="right" for="city_id_input">city</label>
+                            <select name="city_id_input">
                                 <option selected disabled>Select a city</option>
                                 @foreach($cities as $city)
                                     <option value="{{$city->id}}">{{ $city->name  }}</option>
@@ -75,7 +82,7 @@
         </div>
 
 
-        <table style="width:100%" class="table">
+        <table style="width:100%" class="table" id=CustomersTable"">
             <thead class="thead-dark">
             <tr>
                 <th>id</th>
@@ -99,15 +106,18 @@
                     <td>{{ $customer->phone }}</td>
                     <td>{{ $customer->email }}</td>
                     <td>{{ $customer->mobile }}</td>
-                    <td><a href="Show/{{ $customer->id }}"><img src="public/assets/images/preview-icon.png" class="icon"></a></td>
-                    <td><a href="deletecust/{{ $customer->id }}" onclick="return confirm('Are you sure?')"><img src="public/assets/images/delete_icon.png" class="icon"></a></td>
+
+                    <td align="center"><a href="Show/{{ $customer->id }}"><img src="assets/images/preview-icon.png" class="icon"></a></td>
+                    <td align="center"><a href="deletecust/{{ $customer->id }}" onclick="return confirm('Are you sure?')"><img src="assets/images/delete_icon.png" class="icon"></a></td>
+
+
                 </tr>
             @endforeach
         </table>
     </div>
     <script>
         $(document).ready( function () {
-            $('#inventoryTable').DataTable({
+            $('#CustomersTable').DataTable({
                 "sProcessing":     "Traitement en cours...",
                 "sSearch":         "Rechercher&nbsp;:",
                 "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",

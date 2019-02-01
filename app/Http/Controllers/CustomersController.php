@@ -1,16 +1,19 @@
 <?php
+
 namespace App\Http\Controllers;
-use Request;
+
+use Illuminate\Http\Request;
 use DB;
-use App\Cities;
 use App\Customers;
-use View;
-use App\Items;
+use App\Cities;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
+use View;
+
 
 class CustomersController extends Controller
 {
-    static public function testDB()
+    static public function DB()
     {
         $customers =  Customers::all();
         $cities = Cities::all();
@@ -21,20 +24,20 @@ class CustomersController extends Controller
         $customer = new Customers();
         try
         {
-            $customer->lastname =  $request->input('lastname');
-            $customer->firstname = $request->input('firstname');
-            $customer->address = $request->input('address');
-            $customer->city_id = $request->input('city_id');
-            $customer->phone = $request->input('phone');
-            $customer->email = $request->input('email');
-            $customer->mobile = $request->input('mobile');
+            $customer->lastname =  $request->input('lastname_input');
+            $customer->firstname = $request->input('firstname_input');
+            $customer->address = $request->input('address_input');
+            $customer->city_id = $request->input('city_id_input');
+            $customer->phone = $request->input('phone_input');
+            $customer->email = $request->input('email_input');
+            $customer->mobile = $request->input('mobile_input');
             $customer->save();
-            Session::flash('status', 'l\'objet à bien été crée.');
+            Session::flash('status', 'the object have been created');
             Session::flash('class', 'alert-success');
         }
         catch(\Exception $ex)
         {
-            Session::flash('status', 'Une erreur est intervenue : veuillez remplir tous les champs svp');
+            Session::flash('status', 'An error appear, please fill all the fields');
             Session::flash('class', 'alert-danger');
         }
         return redirect('Customers');
@@ -43,30 +46,33 @@ class CustomersController extends Controller
     public function read($idcust)
     {
         $customer = Customers::find($idcust);
+        $cities = Cities::All();
         return View::make('Show', [
-            'customer' => $customer
+            'customer' => $customer,
+
+            'cities' =>$cities
         ]);
     }
 
-    private function update(Request $request)
+    public function update(request $request)
     {
-        $customer = Items::find($request->input('iditem'));
+        $customer = Customers::find($request->input('idcust'));
         try
         {
             $customer->lastname =  $request->input('lastname_input');
             $customer->firstname = $request->input('firstname_input');
             $customer->address = $request->input('address_input');
-            $customer->city_id = $request->input('city_input');
+
             $customer->phone = $request->input('phone_input');
             $customer->email = $request->input('email_input');
             $customer->mobile = $request->input('mobile_input');
             $customer->save();
-            Session::flash('status', 'L\'objet à bien été modifié.');
+            Session::flash('status', 'the object have been updated');
             Session::flash('class', 'alert-success');
         }
         catch(\Exception $ex)
         {
-            Session::flash('status','Une erreur est intervenue : '.$ex->getMessage() );
+            Session::flash('status','An error appear: '.$ex->getMessage() );
             Session::flash('class', 'alert-danger');
         }
         return redirect('Customers');
@@ -74,18 +80,19 @@ class CustomersController extends Controller
 
 
 
-    private function delete(request $request)
+    public function delete($idcust)
     {
-        $customer = Customers::find($request->input('id'));
+
+        $customer = Customers::find($idcust);
         try
         {
             $customer->delete();
-            Session::flash('status', 'l\'objet à bien été supprimé.');
+            Session::flash('status', 'l\'objet has been deleted.');
             Session::flash('class', 'alert-success');
         }
         catch(\Exception $ex)
         {
-            Session::flash('status', 'Une erreur est intervenue');
+            Session::flash('status', 'An error appear');
             Session::flash('class', 'alert-danger');
         }
         return redirect('Customers');

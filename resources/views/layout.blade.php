@@ -27,7 +27,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="/Customers">Clients</a>
-                    <a class="nav-item nav-link" href="/inventory">Inventaire</a>
+                    <a class="nav-item nav-link" href="#">Inventaire</a>
                     <a class="nav-item nav-link" href="#">Locations</a>
                 </div>
             </div>

@@ -13,9 +13,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('Customers', 'CustomersController@testDB');
+Route::get('Customers', 'CustomersController@DB');
 
-Route::post('additem', ['uses' => 'CustomersController@create']);
+Route::post('addcust', ['uses' => 'CustomersController@create']);
+
+Route::post('updatecust', 'CustomersController@update');
 
 Route::get('deletecust/{idcust?}', 'CustomersController@delete');
 

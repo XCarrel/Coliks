@@ -5,7 +5,7 @@ use Cities;
 class Customers extends Model
 {
     public $timestamps = false;
-    protected $table = 'customers';
+
     public function contracts()
     {
         return $this->hasMany('App\Contracts');
