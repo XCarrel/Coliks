@@ -22,3 +22,7 @@ Route::post('updatecust', 'CustomersController@update');
 Route::get('deletecust/{idcust?}', 'CustomersController@delete');
 
 Route::get('Show/{idcust?}', 'CustomersController@read');
+
+Route::get('Purchasers', 'PurchasesController@DB');
+
+Route::get('Purchases/{idpurch?}', 'PurchasesController@read');

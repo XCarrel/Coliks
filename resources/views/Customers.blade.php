@@ -107,7 +107,9 @@
                     <td>{{ $customer->email }}</td>
                     <td>{{ $customer->mobile }}</td>
 
+                    <td align="center"><a href="Purchases/{{ $customer->id }}"><img src="assets/images/Achat.png" class="icon"></a></td>
                     <td align="center"><a href="Show/{{ $customer->id }}"><img src="assets/images/preview-icon.png" class="icon"></a></td>
+
                     <td align="center"><a href="deletecust/{{ $customer->id }}" onclick="return confirm('Are you sure?')"><img src="assets/images/delete_icon.png" class="icon"></a></td>
 
 
