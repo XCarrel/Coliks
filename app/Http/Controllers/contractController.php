@@ -50,6 +50,19 @@ class contractController extends Controller
     {
 
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showContract(Request $request)
+    {
+        // Get the id
+        $contracts = Contracts::where('ID_Contrat', $request->all())->with('renteditems', 'customers')->get();
+
+        return view('showContract')->with('contracts', $contracts);
+    }
 
     /**
      * Display the specified resource.
@@ -68,10 +81,12 @@ class contractController extends Controller
         $client = Customers::where('id', $idClient)->get();
         //$rentedItems = Contracts::where('customer_id', $idClient)->with('renteditems')->get();
         $items = Items::with('categories')->get();
+        $rentprices = Rentprices::with('categories')->get();
+        $durations = Durations::with('rentprices')->get();
 
-
+    
         // Return values to view 
-        return view('contract')->with('client', $client)->with('items', $items);
+        return view('contract')->with('client', $client)->with('items', $items)->with('rentprices', $rentprices)->with('durations', $durations);
     }
 
     /**

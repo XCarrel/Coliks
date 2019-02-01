@@ -32,3 +32,4 @@ Route::get('locations/autocomplete_lastname', 'customerController@autocomplete_l
 Route::post('locations', 'customerController@showForm')->name('ajax');
 Route::post('locations/client', 'customerController@storeCustomer')->name('create_user');
 Route::post('locations/client/update', 'customerController@update')->name('update');
+Route::post('locations/contract/show', 'contractController@showContract');

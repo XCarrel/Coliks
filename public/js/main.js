@@ -6,6 +6,8 @@ $(document).ready(function() {
     $('#nom').keyup(function() {
         $('#submit_user').show();
     });
+
+    
     if($('#nom').empty()) { $('#submit_user').hide(1); $('#user_update').hide(1); }
     // On click, send data of new customer to route and then controller create the new customer
     $('#submit_user').on('click', function(){
@@ -150,9 +152,9 @@ $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initi
                                 
                                 //Check if returned in time 
                                 if (moment(plannedreturn).isBefore(moment().format('DD MMM YYYY')) || effectivereturn == '') {
-                                    $(".table thead").after("<tbody><tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td></td><td><p class='text-warning'>Non</p></td></tr></tbody>");
+                                    $(".table thead").after("<tbody><tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td></td><td><p class='text-warning'>Non</p></td><td><button class='btn btn-outline-dark' type='submit' id='showContrat' name='showContrat' value="+msg.value[item].contracts[id].ID_Contrat+">Voir contrat</button></td></tr></tbody>");
                                 } else {
-                                    $(".table thead").after("<tbody><tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td>"+effectivereturn+"</td><td><p class='text-primary'>Oui</p></td></tr></tbody>");
+                                    $(".table thead").after("<tbody><tr><td>"+msg.value[item].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td>"+effectivereturn+"</td><td><p class='text-primary'>Oui</p></td><td><button class='btn btn-outline-dark' type='submit' id='showContrat' name='showContrat' value="+msg.value[item].contracts[id].ID_Contrat+">Voir contrat</button></td></tr></tbody>");
                                 }
                             });
                             $('#submit').on('click', function(){
@@ -183,6 +185,30 @@ $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initi
                                             // What to do if we succeed
                                             $('.alert alert-success li').text(value.success);
                                             location.reload(true)
+                                                
+                                        },
+                                        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                                            console.log(JSON.stringify(jqXHR));
+                                            console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                                        }
+                                    });
+                            });
+                            // Ajax request with data to show in controller
+                            $('#showContrat').on('click', function(){
+                                
+                                var idContrat = $('#showContrat').val();
+                                    $.ajax({
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        type: "POST",
+                                        url: 'locations/contract/show',
+                                        data: idContrat,
+                                        datatype: "json",
+                                        success: function(value){
+                                            // What to do if we succeed
+                                            $('.alert alert-success li').text(value.success);
+                                            //location.reload(true)
                                                 
                                         },
                                         error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
@@ -228,12 +254,11 @@ $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initi
 
                         //Check if returned in time 
                         if (moment(plannedreturn).isBefore(moment().format('DD MMM YYYY')) || effectivereturn == '') {
-                                $(".table thead").after("<tbody><tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td></td><td><p class='text-warning'>Non</p></td></tr></tbody>");
-
+                                $(".table thead").after("<tbody><tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td></td><td><p class='text-warning'>Non</p></td><td><button class='btn btn-outline-dark' type='submit' id='showContrat' name='showContrat' value="+msg.value[0].contracts[id].ID_Contrat+">Voir contrat</button></td></tr></tbody>");
                         } else {
-                                $(".table thead").after("<tbody><tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td>"+effectivereturn+"</td><td><p class='text-primary'>Oui</p></td></tr></tbody>");
+                                $(".table thead").after("<tbody><tr><td>"+msg.value[0].contracts[id].ID_Contrat+"</td><td>"+creationdate+"</td><td>"+plannedreturn+"</td><td>"+effectivereturn+"</td><td><p class='text-primary'>Oui</p></td><td><button class='btn btn-outline-dark' type='submit' id='showContrat' name='showContrat' value="+msg.value[0].contracts[id].ID_Contrat+">Voir contrat</button></td></tr></tbody>");
                         }
-                    });
+                    
                     $('#submit').on('click', function(){
                         $("#nom").val(msg.value[0].lastname);
                     });
@@ -272,6 +297,31 @@ $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initi
                         });
 
                     });
+                     // Ajax request with data to show in controller
+                     $('#showContrat').on('click', function(){
+                            //$('#showContrat').text('');
+                            var idContrat = $('#showContrat').val(msg.value[0].contracts[id].ID_Contrat);
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                type: "POST",
+                                url: 'locations/contract/show',
+                                data: idContrat,
+                                datatype: "json",
+                                success: function(value){
+                                    // What to do if we succeed
+                                    $('.alert alert-success li').text(value.success);
+                                    //location.reload(true)
+                                        
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                                    console.log(JSON.stringify(jqXHR));
+                                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                                }
+                            });
+                    });
+                });
                 }
                            
                 
