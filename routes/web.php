@@ -14,7 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('inventory', 'inventoryController@testDB');
+Route::get('inventory', 'inventoryController@getInventory');
 
 Route::post('additem', 'inventoryController@create');
 
@@ -23,3 +23,5 @@ Route::post('updateitem', 'inventoryController@update');
 Route::get('deleteitem/{iditem?}', 'inventoryController@delete');
 
 Route::get('item/{idtem?}', 'inventoryController@read');
+
+Route::get('location/{idtem?}', 'inventoryController@readrenters');

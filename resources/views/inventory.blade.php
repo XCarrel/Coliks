@@ -71,7 +71,7 @@
                     </div>
                     <div class="md-form">
                         <label data-error="wrong" data-success="right" for="stock_input">Stock</label>
-                        {{ Form::Text('stock_input','',['class' => 'form-control validate']) }}
+                        {{ Form::checkbox('stock_input','stock', false) }}
                     </div>
                     <div class="md-form">
                         <label data-error="wrong" data-success="right" for="serial_input">N° de série</label>
@@ -83,16 +83,16 @@
                     {{ Form::submit('Confirmer')}}
                 </div>
                 {{ Form::close() }}
-           </div>
-       </div>
-   </div>
+    </div>
+    </div>
+    </div>
 
    <div class="text-center">
-       <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">Ajouter un objet à l'inventaire</a>
+       <a href="" class="btn btn-default btn-rounded mb-4" style="margin-bottom: 5px " data-toggle="modal" data-target="#modalContactForm">Ajouter un objet à l'inventaire</a>
    </div>
 
 
-   <table style="width:100%" class="table" id="inventoryTable">
+   <table style="width:100%" class="table table-striped" id="inventoryTable">
        <thead class="thead-dark">
            <tr>
                <th>ID</th>
@@ -106,8 +106,7 @@
                <th>Type</th>
                <th>Stock</th>
                <th>N°série</th>
-               <th>Voir</th>
-               <th>Supprimer</th>
+               <th>Actions</th>
            </tr>
        </thead>
        @foreach($items as $item )
@@ -124,11 +123,11 @@
                 <td>{{ $item->type }}</td>
                 <td>{{ $item->stock }}</td>
                <td>{{ $item->serialnumber }}</td>
-               <td align="center"><a href="item/{{ $item->id }}"><img src="assets/images/preview_icon.png" class="icon"></a></td>
-               <td align="center"><a href="deleteitem/{{ $item->id }}" onclick="return confirm('Etes-vous sûr ?')"><img src="assets/images/delete_icon.png" class="icon"></a></td>
+               <td align="center"><a href="item/{{ $item->id }}" target="_blank" title="Aperçu"><img src="assets/images/preview_icon.png" class="icon"></a><a href="location/{{ $item->id }}" target="_blank" title="Locations"><img src="assets/images/rent_icon.png" class="icon"></a><a href="deleteitem/{{ $item->id }}" title="Supprimer" onclick="return confirm('Etes-vous sûr ?')"><img src="assets/images/delete_icon.png" class="icon"></a></td>
             </tr>
         @endforeach
     </table>
+        <div class="space"></div>
 </div>
 <script>
     $(document).ready( function () {

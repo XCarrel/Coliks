@@ -2,7 +2,17 @@
 {
     width: 25px;
     margin: 0 auto;
-    display:flex;
+    display:inline-flex;
     text-align: center;
 
+}
+#main
+ {
+    margin-bottom: 5px !important;
+ }
+.space
+{
+    margin-bottom: 45px;
+    margin-top: 45px;
+    width: 100%;
 }

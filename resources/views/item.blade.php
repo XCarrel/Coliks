@@ -9,6 +9,12 @@
         echo Session::get('status');
         echo '</div>';
     }
+    if($item->stock !== null)
+            $stock[] = [true,$item->stock];
+    else
+        $stock = [false,0];
+
+
     ?>
     @if (\Session::has('success'))
         <div class="alert alert-success">
@@ -17,6 +23,7 @@
             </ul>
         </div>
     @endif
+
     <div class="text-center">
         <a href="#" class="btn btn-default btn-rounded mb-4 data" onclick="revealform();">Modifier</a>
         <a href="#" class="btn btn-default btn-rounded mb-4 input" onclick="revealform();">Annuler</a>
@@ -81,7 +88,7 @@
             <tr>
                 <td>Stock</td>
                 <td class="data">{{ $item->stock }}</td>
-                <td class="input">{{ Form::Text('stock_input',$item->stock,['class' => 'form-control validate']) }}</td>
+                <td class="input">{{ Form::checkbox('stock_input','stock', $stock[0]) }}</td>
             </tr>
             <tr>
                 <td>N° de série</td>
@@ -91,7 +98,7 @@
 
         </tbody>
     </table>
-    <button type="submit" class="input btn btn-primary">Confirmer</button>
+    <button type="submit" class="input btn btn-primary float-right">Confirmer</button>
 
     {{ Form::close()  }}
 <script>

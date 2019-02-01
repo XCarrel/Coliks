@@ -10,6 +10,7 @@ use Contracts;
 
 class Renteditems extends Model
 {
+    protected $table = 'renteditems';
     public function durations()
     {
         return $this->belongsTo('App\Durations');

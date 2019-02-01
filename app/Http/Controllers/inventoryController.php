@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Customers;
+use App\Rentprices;
 use Illuminate\Http\Request;
 use DB;
 use App\Categories;
+use App\Renteditems;
 use App\Items;
+use App\Contracts;
+use App\Durations;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use View;
@@ -13,7 +18,7 @@ use View;
 
 class inventoryController extends Controller
 {
-    static public function testDB()
+    static public function getInventory()
     {
         $items =  Items::all();
         $cats = Categories::all();
@@ -33,7 +38,10 @@ class inventoryController extends Controller
                 $item->cost = $request->input('price_input');
                 $item->return = $request->input('return_input');
                 $item->type = $request->input('type_input');
-                $item->stock = $request->input('stock_input');
+                if ($request->input('stock_input') == 'stock')
+                    $item->stock = 1;
+                else
+                    $item->stock = 0;
                 $item->serialnumber = $request->input('serial_input');
                 $item->save();
 
@@ -73,7 +81,10 @@ class inventoryController extends Controller
             $item->cost = $request->input('cost_input');
             $item->return = $request->input('return_input');
             $item->type = $request->input('type_input');
-            $item->stock = $request->input('stock_input');
+            if ($request->input('stock_input') == 'stock')
+                $item->stock = 1;
+            else
+                $item->stock = 0;
             $item->serialnumber = $request->input('serial_input');
             $item->save();
 
@@ -104,6 +115,26 @@ class inventoryController extends Controller
             Session::flash('class', 'alert-danger');
         }
         return redirect('inventory');
+    }
+    public function readrenters($iditem)
+    {
+        $item = Items::find($iditem);
+        $locations = Renteditems::where('item_id',$iditem)->get();
+        $benefit = 0- $item->cost;
+        foreach ($locations as $location) {
+            $duration_type = Durations::find($location->duration_id);
+            $location->duration = $duration_type->details;
+            $location->contracts = Contracts::where('ID_Contrat',$location->contract_id)->first();
+
+            $location->customer = Customers::find(  $location->contracts['customer_id']);
+            $benefit += $location->price;
+        }
+
+        return View::make('locations', [
+            'item' => $item,
+            'locations' => $locations,
+            'benefit' => $benefit
+        ]);
     }
 
 
