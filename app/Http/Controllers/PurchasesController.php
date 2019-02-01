@@ -26,10 +26,10 @@ class PurchasesController extends Controller
 
     public function create(request $request)
     {
+
         $purchase = new Purchases();
         try
         {
-            $purchase->customer_id =  $request->input('customer_id_input');
             $purchase->date = $request->input('date_input');
             $purchase->description = $request->input('description_input');
             $purchase->amount = $request->input('amount_input');
@@ -50,8 +50,9 @@ class PurchasesController extends Controller
     public function read($idpurch)
     {
         $purchases = Purchases::all();
-        //$purchase = Purchases::find($idpurch);
+        $purchase = Purchases::find($idpurch);
         $customers = Customers::All();
-        return view('Purchases')->with('purchases',$purchases)->with('customers',$customers);
+
+        return view('Purchases')->with('purchases',$purchases)->with('customers',$customers)->with('purchase',$purchase);
     }
 }

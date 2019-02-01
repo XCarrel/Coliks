@@ -15,7 +15,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Nouveau client</h4>
+                    <h4 class="modal-title w-100 font-weight-bold">Nouveau bon de réduction</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -23,8 +23,8 @@
                 {{ Form::open(array('url' => 'addpurch','method'=>'POST')) }}
                 <div class="modal-body mx-3">
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="customer_id_input">customer_id</label>
-                        {{ Form::Text('customer_id_input','',['class' => 'form-control validate']) }}
+
+                        <input hidden name="idpurch" value="{{ $purchase->id }}">
 
                     </div>
 
@@ -62,8 +62,7 @@
     <table style="width:100%" class="table" id=PurchasesTable"">
         <thead class="thead-dark">
         <tr>
-            <th>id</th>
-            <th>customer_id</th>
+
             <th>date</th>
             <th>description</th>
             <th>amount</th>
@@ -73,8 +72,8 @@
 
         @foreach($purchases->sortByDesc('date') as $purchase )
             <tr data-entry-id ="{{$purchase->id }}">
-                <td>{{ $purchase->id }}</td>
-                <td>{{ $purchase->customer_id }}</td>
+
+
                 <td>{{ $purchase->date }}</td>
                 <td>{{ $purchase->description }}</td>
                 <td>{{ $purchase->amount }}</td>
