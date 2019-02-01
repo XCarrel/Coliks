@@ -23,8 +23,9 @@
                 {{ Form::open(array('url' => 'addpurch','method'=>'POST')) }}
                 <div class="modal-body mx-3">
                     <div class="md-form mb-5">
-
-                        <input hidden name="idpurch" value="{{ $purchase->id }}">
+                        
+                        <td>ID</td>
+                        <td>{{ $purchase->id }}</td>
 
                     </div>
 
