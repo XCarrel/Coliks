@@ -15,20 +15,47 @@ use View;
 class PurchasesController extends Controller
 {
 
-    static public function DB()
+    static public function DB($idpurch)
     {
-        $purchases =  Purchases::all();
+        $purchases =  Purchases::find($idpurch);
+        $customers =  Customers::all();
 
-        return view('Purchases')->with('purchases',$purchases);
+        return view('Purchases')->with('purchases',$purchases)->with('customers',$customers);
     }
+
+
+    public function create(request $request)
+    {
+        $purchase = new Purchases();
+        try
+        {
+            $purchase->customer_id =  $request->input('customer_id_input');
+            $purchase->date = $request->input('date_input');
+            $purchase->description = $request->input('description_input');
+            $purchase->amount = $request->input('amount_input');
+
+            $purchase->save();
+            Session::flash('status', 'the gift has been created');
+            Session::flash('class', 'alert-success');
+        }
+        catch(\Exception $ex)
+        {
+            Session::flash('status', 'An error appear, please fill all the fields');
+            Session::flash('class', 'alert-danger');
+        }
+        return redirect('Customers');
+    }
+
 
     public function read($idpurch)
     {
+
         $purchase = Purchases::find($idpurch);
+        $customers = Customers::All();
         return View::make('Purchases', [
             'purchase' => $purchase,
 
-
+            'customers' =>$customers
         ]);
     }
 }
