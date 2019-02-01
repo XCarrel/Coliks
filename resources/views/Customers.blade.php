@@ -99,8 +99,8 @@
                     <td>{{ $customer->phone }}</td>
                     <td>{{ $customer->email }}</td>
                     <td>{{ $customer->mobile }}</td>
-                    <td><a href="Show/{{ $customer->id }}"><img src="assets/images/preview-icon.png" class="icon"></a></td>
-                    <td><a href="deletecust/{{ $customer->id }}" onclick="return confirm('Are you sure?')"><img src="assets/images/delete_icon.png" class="icon"></a></td>
+                    <td><a href="Show/{{ $customer->id }}"><img src="public/assets/images/preview-icon.png" class="icon"></a></td>
+                    <td><a href="deletecust/{{ $customer->id }}" onclick="return confirm('Are you sure?')"><img src="public/assets/images/delete_icon.png" class="icon"></a></td>
                 </tr>
             @endforeach
         </table>
