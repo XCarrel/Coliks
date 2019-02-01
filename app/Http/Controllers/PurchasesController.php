@@ -15,9 +15,9 @@ use View;
 class PurchasesController extends Controller
 {
 
-    static public function DB($idpurch)
+    static public function DB()
     {
-        $purchases =  Purchases::find($idpurch);
+        $purchases =  Purchases::all();
         $customers =  Customers::all();
 
         return view('Purchases')->with('purchases',$purchases)->with('customers',$customers);
@@ -49,13 +49,9 @@ class PurchasesController extends Controller
 
     public function read($idpurch)
     {
-
-        $purchase = Purchases::find($idpurch);
+        $purchases = Purchases::all();
+        //$purchase = Purchases::find($idpurch);
         $customers = Customers::All();
-        return View::make('Purchases', [
-            'purchase' => $purchase,
-
-            'customers' =>$customers
-        ]);
+        return view('Purchases')->with('purchases',$purchases)->with('customers',$customers);
     }
 }
