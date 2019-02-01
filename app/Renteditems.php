@@ -27,7 +27,7 @@ class Renteditems extends Model
 
     public function contracts()
     {
-        return $this->belongsTo('App\Contracts');
+        return $this->belongsTo('App\Contracts', 'ID_Contrat');
     }
 
     

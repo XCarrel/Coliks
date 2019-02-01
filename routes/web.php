@@ -26,9 +26,9 @@ Route::get('/locations', function () {
     return view('locations');
 })->name('locations');
 
-Route::get('/locations', 'locationsController@showCities');
+Route::get('/locations', 'customerController@showCities');
 
-Route::get('locations/autocomplete_lastname', 'locationsController@autocomplete_lastname')->name('autocomplete_lastname');
-Route::post('locations', 'locationsController@showForm')->name('ajax');
-Route::post('locations/client', 'locationsController@storeCustomer')->name('create_user');
-Route::post('locations/client/update', 'locationsController@update')->name('update');
+Route::get('locations/autocomplete_lastname', 'customerController@autocomplete_lastname')->name('autocomplete_lastname');
+Route::post('locations', 'customerController@showForm')->name('ajax');
+Route::post('locations/client', 'customerController@storeCustomer')->name('create_user');
+Route::post('locations/client/update', 'customerController@update')->name('update');

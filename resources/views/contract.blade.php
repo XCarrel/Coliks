@@ -3,9 +3,8 @@
 @section('content')
 
 
-<h2>Nouveau contrat de location</h2>
+<h2 class="title">Nouveau contrat de location</h2>
 
--------------------
 
 <form method="POST">
 {{ csrf_field() }}
@@ -14,16 +13,16 @@
       <label for="Nom">Nom :</label>
       <input type="text" class="form-control" id="nom" name="nom" value="{{$client[0]['lastname']}}" readonly>
     </div>
-    <div class="form-group col-md-6">
-      <label for="Adresse">Adresse :</label>
-      <input type="text" class="form-control" id="adresse" name="adresse" value="{{$client[0]['address']}}" readonly>
-    </div>
-  </div>
-  <div class="form-row">
     <div class="form-group col-md-6" id="scrollable-dropdown-menu">   
         <label for="Prenom">Prénom :</label>
         <input type="text" class="form-control" id="prenom" name="prenom" value="{{$client[0]['firstname']}}" readonly>    
    </div>
+  </div>
+  <div class="form-row">
+  <div class="form-group col-md-6">
+      <label for="Adresse">Adresse :</label>
+      <input type="text" class="form-control" id="adresse" name="adresse" value="{{$client[0]['address']}}" readonly>
+    </div>
     <div class="form-group col-md-6">
       <label for="Localite">Localité :</label>
       <input type="text" class="form-control" id="localite" name="localite" value="{{$client[0]['cities']['name']}}" readonly>
@@ -42,6 +41,29 @@
       <label for="Email">Email :</label>
       <input type="email" class="form-control" id="email" name="email" value="{{$client[0]['email']}}" readonly>
     </div>
+  </div>
+  <div class="form-row">
+  <div class="table-responsive">
+  <table class="table">
+    <thead>
+      <th>Pos</th>
+      <th>Objet</th>
+      <th>Catégorie</th>
+      <th>Prix</th>
+    </thead>
+    <tbody>
+      <td></td>
+      <td>
+        <select class="custom-select" id="select_localite" name="localite_select">
+          <option disabled selected value>Séléctionner un object</option>
+          @foreach ($items as $item)
+            <option value="{{$item->id}}">{{$item->itemnb}}</option>
+          @endforeach
+        </select>
+    </td>
+    </tbody>
+  </table>
+</div> 
   </div>
   </form>
   

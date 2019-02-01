@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Durations extends Model
 {
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'code',
+        'details',
+    ];
     public function rentprices()
     {
         return $this->hasMany('App\Rentprices', 'duration_id');

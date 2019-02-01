@@ -6,7 +6,7 @@ $(document).ready(function() {
     $('#nom').keyup(function() {
         $('#submit_user').show();
     });
-    if($('#nom').empty()) { $('#submit_user').hide(1); }
+    if($('#nom').empty()) { $('#submit_user').hide(1); $('#user_update').hide(1); }
     // On click, send data of new customer to route and then controller create the new customer
     $('#submit_user').on('click', function(){
         var formData = {
@@ -29,7 +29,7 @@ $(document).ready(function() {
             success: function(value){
                 // What to do if we succeed
                 $('.alert alert-success li').text(value.success);
-                location.reload(true)
+                //location.reload(true)
             },
             error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                 console.log(JSON.stringify(jqXHR));
@@ -83,10 +83,13 @@ $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initi
                     $('#tel').val('');
                     $('#natel').val('');
                     $('#email').val('');
-                    $('#select').val('');
+                    $('#select').empty();
+                    $('.table').empty();
                     $("#submit").hide(1);
                     $('#submit_user').show();
+                    $('#user_update').hide(1);
                     $('#select_localite').show();
+                    $('#select_localite').prop('selectedIndex',0);
                     $('#localite_name').hide(1);
                 }
                 });                                        
@@ -129,7 +132,7 @@ $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initi
                             $("#tel").val(msg.value[item].phone);
                             $("#natel").val(msg.value[item].mobile);
                             $("#email").val(msg.value[item].email);
-                            $("#hidden_id").html(msg.value[item].id);
+                            $("#hidden_id").val(msg.value[item].id);
                             $('#submit').show();
                             $('#user_update').show();
                             //Check if array empty
@@ -141,9 +144,9 @@ $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initi
                             }
                             $.each(msg.value[item].contracts, function(id) {
                                 //Format date with library moment.js (Day Month Year)
-                                const creationdate = moment(msg.value[item].contracts[id].creationdate, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY');
-                                const plannedreturn = moment(msg.value[item].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY');
-                                if (msg.value[item].contracts[id].effectivereturn != null) { const effectivereturn = moment(msg.value[item].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY'); } else { var effectivereturn = '';}
+                                if (msg.value[item].contracts[id].creationdate != null) { var creationdate = moment(msg.value[item].contracts[id].creationdate, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY'); } else { var creationdate = ''; }
+                                if (msg.value[item].contracts[id].plannedreturn != null) {var plannedreturn = moment(msg.value[item].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY'); } else { var plannedreturn = ''; }
+                                if (msg.value[item].contracts[id].effectivereturn != null) { var effectivereturn = moment(msg.value[item].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY'); } else { var effectivereturn = '';}
                                 
                                 //Check if returned in time 
                                 if (moment(plannedreturn).isBefore(moment().format('DD MMM YYYY')) || effectivereturn == '') {
@@ -159,7 +162,7 @@ $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initi
                             $('#user_update').on('click', function(){
                                 $("#nom").val(msg.value[item].lastname);
                                 var formData = {
-                                    'id' : $("#hidden_id").html(),
+                                    'id' : $("#hidden_id").val(),
                                     'lastname' : $("#nom").val(),
                                     'firstname' : $("#prenom").val(),
                                     'address' : $("#adresse").val(),
@@ -209,7 +212,7 @@ $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initi
                     $("#tel").val(msg.value[0].phone);
                     $("#natel").val(msg.value[0].mobile);
                     $("#email").val(msg.value[0].email);
-                    $("#hidden_id").html(msg.value[0].id);
+                    $("#hidden_id").val(msg.value[0].id);
                     if(msg.value[0].contracts == '')
                     {
                         $('.table').append('<h3><p class="text-warning">Pas de contrat...</p></h3>');
@@ -219,9 +222,9 @@ $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initi
                     $.each(msg.value[0].contracts, function(id) {
 
                         //Format date with library moment.js (Day Month Year)
-                        const creationdate = moment(msg.value[0].contracts[id].creationdate, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY');
-                        const plannedreturn = moment(msg.value[0].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY');
-                        if (msg.value[0].contracts[id].effectivereturn != null) { const effectivereturn = moment(msg.value[0].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY'); } else { var effectivereturn = '';}
+                        if (msg.value[0].contracts[id].creationdate != null) { var creationdate = moment(msg.value[0].contracts[id].creationdate, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY'); } else { var creationdate = ''; }
+                        if (msg.value[0].contracts[id].plannedreturn != null) { var plannedreturn = moment(msg.value[0].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY'); } else { var plannedreturn = ''; }
+                        if (msg.value[0].contracts[id].effectivereturn != null) { var effectivereturn = moment(msg.value[0].contracts[id].plannedreturn, 'YYYY-MM-DD HH:mm:ss').format('DD MMM YYYY'); } else { var effectivereturn = '';}
 
                         //Check if returned in time 
                         if (moment(plannedreturn).isBefore(moment().format('DD MMM YYYY')) || effectivereturn == '') {
@@ -239,7 +242,7 @@ $('#scrollable-dropdown-menu #nom').typeahead(/* pass in your datasets and initi
                     $('#user_update').on('click', function(){
                         $("#nom").val(msg.value[0].lastname);
                         var formData = {
-                            'id' : $("#hidden_id").html(),
+                            'id' : $("#hidden_id").val(),
                             'lastname' : $("#nom").val(),
                             'firstname' : $("#prenom").val(),
                             'address' : $("#adresse").val(),

@@ -12,8 +12,8 @@
     <script src="../js/jquery/jquery.min.js" type="text/javascript"></script>
     <script src="../js/bootstrap/bootstrap.js" type="text/javascript"></script>
     <script src="../js/typeahead.bundle.js" type="text/javascript"></script>
-    <script src="https://unpkg.com/moment" ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/locale/fr-ch.js"></script>
+    <script src="../js/moment/moment.js" ></script>
+    <script src="../js/moment/locale/fr-ch.js"></script>
 
 
     @yield('pagecss')

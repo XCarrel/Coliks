@@ -48,6 +48,7 @@ class contractController extends Controller
      */
     public function storeContract(Request $request)
     {
+
     }
 
     /**
@@ -60,13 +61,17 @@ class contractController extends Controller
     {
 
         // Get POST value from ajax
-        $client = $request->all();
+        $idClient = $request->id;
+
 
         //3 where clauses to be sure that's the right data returned (without id)
-        $client = Customers::where('city_id', $client['localite_select'])->Where('lastname', $client['nom'])->where('firstname', $client['prenom'])->with('cities')->get();
+        $client = Customers::where('id', $idClient)->get();
+        //$rentedItems = Contracts::where('customer_id', $idClient)->with('renteditems')->get();
+        $items = Items::with('categories')->get();
+
 
         // Return values to view 
-        return view('contract')->with('client', $client);
+        return view('contract')->with('client', $client)->with('items', $items);
     }
 
     /**
